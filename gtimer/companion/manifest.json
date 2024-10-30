@@ -1,0 +1,26 @@
+{
+	"id": "gtimer",
+	"name": "GTimer",
+	"shortname": "gtimer",
+	"description": "To control scores and timers for for stream.",
+	"version": "0.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/gwenitora/gtimer.git",
+	"bugs": "https://github.com/gwenitora/gtimer/issues",
+	"maintainers": [
+		{
+			"name": "Gwenitora",
+			"email": "contact@gwenitora.com"
+		}
+	],
+	"runtime": {
+		"type": "node22",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../dist/main.js"
+	},
+	"legacyIds": [],
+	"manufacturer": "Gwenitora",
+	"products": ["Timer"],
+	"keywords": []
+}
