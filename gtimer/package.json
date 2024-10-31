@@ -6,7 +6,7 @@
 	"scripts": {
 		"postinstall": "husky",
 		"format": "prettier -w .",
-		"package": "yarn build && companion-module-build",
+		"pack": "yarn build && companion-module-build",
 		"build": "rimraf dist && yarn build:main",
 		"build:main": "tsc -p tsconfig.build.json",
 		"dev": "tsc -p tsconfig.build.json --watch",

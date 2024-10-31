@@ -21,7 +21,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				}
 			],
 			callback: async (feedback) => {
-				return ChronosColl.getChrono((await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_')).IsStarted;
+				return ChronosColl.getChrono((await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_')).IsStarted;
 			}
 		},
 		isPause: {
@@ -41,7 +41,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				}
 			],
 			callback: async (feedback) => {
-				return ChronosColl.getChrono((await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_')).IsPaused;
+				return ChronosColl.getChrono((await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_')).IsPaused;
 			}
 		},
 	})

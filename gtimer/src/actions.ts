@@ -1,5 +1,6 @@
 import ChronosColl from './chronosCollection.js'
 import type { ModuleInstance } from './main.js'
+import { evaluateExpression } from './utils.js';
 
 export function UpdateActions(self: ModuleInstance): void {
 	self.setActionDefinitions({
@@ -63,10 +64,10 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
+				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch.CountDown = event.options.countdown as boolean;
 				ch.ResetOnEnd = event.options.reset as boolean;
-				ch.Lenght = parseFloat(await self.parseVariablesInString(event.options.lenght as string));
+				ch.Lenght = evaluateExpression(await self.parseVariablesInString(event.options.lenght as string));
 				ch.Regex = await self.parseVariablesInString(event.options.reg as string);
 				ch.RegexEnd = await self.parseVariablesInString(event.options.regEnd as string);
 				console.log('DetectHere', await self.parseVariablesInString(event.options.name as string));
@@ -77,14 +78,14 @@ export function UpdateActions(self: ModuleInstance): void {
 				}
 			},
 			subscribe: async (event) => {
-				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
+				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch.ResetOnEnd = event.options.reset as boolean;
 				ch.Regex = await self.parseVariablesInString(event.options.reg as string);
 				ch.RegexEnd = await self.parseVariablesInString(event.options.regEnd as string);
 				ch.AddInstance(event.id);
 			},
 			unsubscribe: async (event) => {
-				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
+				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch?.RemoveInstance(event.id);
 			},
 		},
@@ -100,7 +101,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
+				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch.Pause();
 			},
 		}
