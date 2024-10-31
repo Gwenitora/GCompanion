@@ -24,7 +24,7 @@ jobs:
             cd "$dir"
             npm install
             yarn build
-            companion-module-build
+            npx companion-module-build
             mv pkg "../${dir%/}-pkg"  # Renommage du dossier pkg en fonction du nom du dossier
             cd ..
           done
