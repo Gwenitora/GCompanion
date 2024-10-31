@@ -77,7 +77,7 @@ export function UpdateActions(self: ModuleInstance): void {
 					id: 'reset',
 					type: 'checkbox',
 					label: 'Reset on end',
-					default: false
+					default: true
 				},
 				{
 					id: 'descriptionFormat',
