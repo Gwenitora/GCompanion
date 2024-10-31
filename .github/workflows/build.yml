@@ -30,19 +30,11 @@ jobs:
             cd ..
           done
 
-      - name: List files for debugging 0
-        run: ls -l
-
       - name: Setup branch main
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout -B main
-          find ./ -mindepth 1 ! -regex '^.*\.GCompanion'
-          find ./ -mindepth 1 ! -regex '^.*\.GCompanion' -delete
-        
-      - name: List files for debugging 1
-        run: ls -l
 
       - name: Checkout code
         uses: actions/checkout@v2 
@@ -51,8 +43,9 @@ jobs:
 
       - name: Commit change in local branch
         run: |
-          git add .
-          git commit -m "Deploy packages to main branch"
+          ls-l
+          git add *.GCompanion
+          git commit -m "Deploy packages to main branch" || echo "No changes to commit"
 
       - name: Push changes to main branch
         uses: ad-m/github-push-action@v0.6.0
