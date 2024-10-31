@@ -1,7 +1,34 @@
+import { CompanionActionEvent, CompanionActionInfo } from '@companion-module/base/dist/index.js';
 import ChronosColl from './chronosCollection.js'
 import type { ModuleInstance } from './main.js'
+import { evaluateExpression } from './utils.js';
+import gtools from '@gscript/gtools';
+import dataLink from './dataLink.js';
+const { maths } = gtools;
 
 export function UpdateActions(self: ModuleInstance): void {
+
+	async function updateDatasChrono(ch: any, event: CompanionActionEvent | CompanionActionInfo) {ch.CountDown = event.options.countdown as boolean;
+		ch.ResetOnEnd = event.options.reset as boolean;
+		var hou = evaluateExpression(await self.parseVariablesInString(event.options.hou as string));
+		var min = evaluateExpression(await self.parseVariablesInString(event.options.min as string));
+		var sec = evaluateExpression(await self.parseVariablesInString(event.options.sec as string));
+		hou = hou ? hou : 0;
+		min = min ? min : 0;
+		sec = sec ? sec : 0;
+		var Lenght = hou * 60 * 60 + min * 60 + sec;
+		ch.Lenght = Lenght;
+		if (event.options.cmode as boolean) {
+			Lenght = maths.mod(Lenght, (24 * 60 * 60));
+			const date = new Date(Date.now());
+			const now = (date.getHours() * 60 + date.getMinutes()) * 60 + date.getSeconds();
+			Lenght = Lenght - now;
+			ch.Lenght = maths.mod(Lenght, (24 * 60 * 60));
+		}
+		ch.Regex = await self.parseVariablesInString(event.options.reg as string);
+		ch.RegexEnd = await self.parseVariablesInString(event.options.regEnd as string);
+	}
+
 	self.setActionDefinitions({
 		startStopChrono: {
 			name: 'Start/Stop Chrono',
@@ -14,17 +41,37 @@ export function UpdateActions(self: ModuleInstance): void {
 					default: 'Default'
 				},
 				{
-					id: 'lenght',
+					id: 'hou',
 					type: 'textinput',
 					useVariables: true,
-					label: 'Lenght (in seconds, 0 in countup for infinite)',
-					default: '0'
+					label: 'Hours',
+					default: ''
+				},
+				{
+					id: 'min',
+					type: 'textinput',
+					useVariables: true,
+					label: 'Minutes',
+					default: ''
+				},
+				{
+					id: 'sec',
+					type: 'textinput',
+					useVariables: true,
+					label: 'Seconds',
+					default: '30'
+				},
+				{
+					id: 'cmode',
+					type: 'checkbox',
+					label: 'Clock mode (get elapsed time between now and target time)',
+					default: false
 				},
 				{
 					id: 'countdown',
 					type: 'checkbox',
 					label: 'Countdown',
-					default: false
+					default: true
 				},
 				{
 					id: 'reset',
@@ -61,15 +108,16 @@ export function UpdateActions(self: ModuleInstance): void {
 					label: 'Format when stopped',
 					default: '$(gtimer:Format_Empty)'
 				},
+				{
+					id: 'makeUpdate',
+					type: 'checkbox',
+					label: 'Update',
+					default: false
+				}
 			],
 			callback: async (event) => {
-				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
-				ch.CountDown = event.options.countdown as boolean;
-				ch.ResetOnEnd = event.options.reset as boolean;
-				ch.Lenght = parseFloat(await self.parseVariablesInString(event.options.lenght as string));
-				ch.Regex = await self.parseVariablesInString(event.options.reg as string);
-				ch.RegexEnd = await self.parseVariablesInString(event.options.regEnd as string);
-				console.log('DetectHere', await self.parseVariablesInString(event.options.name as string));
+				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
+				await updateDatasChrono(ch, event);
 				if (!ch.IsStarted) {
 					ch.Start();
 				} else {
@@ -77,14 +125,16 @@ export function UpdateActions(self: ModuleInstance): void {
 				}
 			},
 			subscribe: async (event) => {
-				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
-				ch.ResetOnEnd = event.options.reset as boolean;
-				ch.Regex = await self.parseVariablesInString(event.options.reg as string);
-				ch.RegexEnd = await self.parseVariablesInString(event.options.regEnd as string);
+				const ch = ChronosColl.AddChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch.AddInstance(event.id);
+
+				if (event.options.makeUpdate !== dataLink.getDatas(event.id)) {
+					await updateDatasChrono(ch, event);
+					dataLink.setDatas(event.id, event.options.makeUpdate)
+				}
 			},
 			unsubscribe: async (event) => {
-				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
+				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch?.RemoveInstance(event.id);
 			},
 		},
@@ -100,7 +150,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_'));
+				const ch = ChronosColl.getChrono((await self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 				ch.Pause();
 			},
 		}
