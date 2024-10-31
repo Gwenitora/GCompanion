@@ -38,7 +38,8 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout -B main
-          find ./ -mindepth 1 ! -name '*.Companion' -delete
+          find ./ -mindepth 1 ! -regex '^.*\.GCompanion'
+          find ./ -mindepth 1 ! -regex '^.*\.GCompanion' -delete
         
       - name: List files for debugging 1
         run: ls -l
