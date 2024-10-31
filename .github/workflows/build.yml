@@ -43,7 +43,7 @@ jobs:
 
       - name: Commit change in local branch
         run: |
-          ls-l
+          ls -l
           git add *.GCompanion
           git commit -m "Deploy packages to main branch" || echo "No changes to commit"
 
