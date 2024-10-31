@@ -28,6 +28,7 @@ jobs:
             npx companion-module-build
             mv pkg "../${dir%/}-GCompanion"  # Renommage du dossier pkg en fonction du nom du dossier
             cd ..
+            ls -l
           done
 
       - name: Setup branch main
