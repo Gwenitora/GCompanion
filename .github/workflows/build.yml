@@ -35,7 +35,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git checkout -B main
-          find ./myfolder -mindepth 1 ! -regex '^./myfolder/*.GCompanion\(/.*\)?' -delete # Supprimer tous les fichiers du répertoire pour cette branche
+          find . -mindepth 1 ! -regex '^./*.GCompanion\(/.*\)?' -delete # Supprimer tous les fichiers du répertoire pour cette branche
         
       - name: List files for debugging
         run: ls -l
