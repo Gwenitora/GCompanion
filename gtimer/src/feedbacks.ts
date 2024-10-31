@@ -1,6 +1,7 @@
 import { combineRgb } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
 import ChronosColl from './chronosCollection.js';
+import dataLink from './dataLink.js';
 
 export function UpdateFeedbacks(self: ModuleInstance): void {
 	self.setFeedbackDefinitions({
@@ -20,8 +21,15 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					default: 'Default'
 				}
 			],
-			callback: async (feedback) => {
-				return ChronosColl.getChrono((await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_')).IsStarted;
+			callback: (feedback) => {
+				try {
+					return ChronosColl.getChrono(dataLink.getDatas(feedback.id)).IsStarted;
+				} catch (e) {
+					return false;
+				}
+			},
+			subscribe: async (feedback) => {
+				dataLink.setDatas(feedback.id, (await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 			}
 		},
 		isPause: {
@@ -40,8 +48,15 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					default: 'Default'
 				}
 			],
-			callback: async (feedback) => {
-				return ChronosColl.getChrono((await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').replaceAll(' ', '_')).IsPaused;
+			callback: (feedback) => {
+				try {
+					return ChronosColl.getChrono(dataLink.getDatas(feedback.id)).IsPaused;
+				} catch (e) {
+					return false;
+				}
+			},
+			subscribe: async (feedback) => {
+				dataLink.setDatas(feedback.id, (await self.parseVariablesInString(feedback.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
 			}
 		},
 	})

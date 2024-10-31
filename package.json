@@ -1,0 +1,12 @@
+{
+	"scripts": {
+		"postinstall": "cd gtimer && npm run postinsall && cd ..",
+		"format": "cd gtimer && npm run format && cd ..",
+		"pack": "cd gtimer && npm run package && cd ..",
+		"build": "cd gtimer && npm run build && cd ..",
+		"build:main": "cd gtimer && npm run build:main && cd ..",
+		"dev": "cd gtimer && npm run dev && cd ..",
+		"lint:raw": "cd gtimer && npm run lint:raw && cd ..",
+		"lint": "cd gtimer && npm run lint && cd .."
+	}
+}
