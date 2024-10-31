@@ -28,7 +28,6 @@ jobs:
             npx companion-module-build
             mv pkg "../${dir%/}.GCompanion"  # Renommage du dossier pkg en fonction du nom du dossier
             cd ..
-            ls -l
           done
 
       - name: Setup branch main
@@ -36,12 +35,12 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git checkout -B main
-          rm -rf * !(*.GCompanion)  # Supprimer tous les fichiers du répertoire pour cette branche
+          find . -type f ! -name '*.GCompanion' -delete # Supprimer tous les fichiers du répertoire pour cette branche
         
       - name: List files for debugging
         run: ls -l
 
-      - name: Commit new version
+      - name: Commit change in local branch
         run: |
           git add .
           git commit -m "Deploy packages to main branch"
