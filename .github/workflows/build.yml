@@ -27,8 +27,8 @@ jobs:
             yarn build
             npx companion-module-build
             mv pkg "../${dir%/}.GCompanion"  # Renommage du dossier pkg en fonction du nom du dossier
+            ls -l "../${dir%/}.GCompanion"
             cd ..
-            ls -l "$dir"
           done
 
       - name: Setup branch main
