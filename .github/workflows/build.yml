@@ -26,7 +26,7 @@ jobs:
             npm install
             yarn build
             npx companion-module-build
-            mv pkg "../${dir%/}.GCompanion"  # Renommage du dossier pkg en fonction du nom du dossier
+            mv pkg "../${dir%/}.GCompanion"
             cd ..
           done
 
@@ -35,7 +35,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git checkout -B main
-          find . -mindepth 1 ! -name '*.GCompanion' -exec rm -rf {} + # Supprimer tous les fichiers du répertoire pour cette branche
+          find . -mindepth 1 ! -name '*.GCompanion' -exec bash -c 'if [ -e "$0" ]; then rm -rf "$0"; fi' {} \;
         
       - name: List files for debugging
         run: ls -l
