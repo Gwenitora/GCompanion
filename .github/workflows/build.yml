@@ -38,7 +38,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git checkout -B main
-          find ./myfolder -mindepth 1 ! -path '*.Companion' -delete
+          find ./ -mindepth 1 ! -path '*.Companion' -delete
         
       - name: List files for debugging 1
         run: ls -l
