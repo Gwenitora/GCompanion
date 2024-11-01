@@ -38,7 +38,7 @@ class Chrono {
         this.resetOnEnd = true;
         this.lenght = 0;
 
-        VariablesCtrl.set(this.name + '-String', "");
+        VariablesCtrl.set(this.name, "");
         VariablesCtrl.set(this.name + '-Seconds', "");
     }
 
@@ -132,7 +132,7 @@ class Chrono {
         }
         time = (time === "" ? "0" : time)
             .replaceAll("$\\", '$');
-        VariablesCtrl.set(this.name + '-String', time);
+        VariablesCtrl.set(this.name, time);
         VariablesCtrl.set(this.name + '-Seconds', maths.floor(date.getTime() / 1000).toString());
     }
 
@@ -190,7 +190,7 @@ class ChronosCollection {
     public Delete(key: string): void {
         if (this.chronos[key] === undefined) return;
         delete this.chronos[key];
-        VariablesCtrl.del(`Chrono-${key}-String`);
+        VariablesCtrl.del(`Chrono-${key}`);
         VariablesCtrl.del(`Chrono-${key}-Seconds`);
     }
 
