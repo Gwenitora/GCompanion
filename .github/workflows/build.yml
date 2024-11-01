@@ -40,7 +40,8 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout -B main
-          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -exec rm -rf {} +
+          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -print
+          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -exec rm -f {} +
 
       - name: Commit change in local branch
         run: |
