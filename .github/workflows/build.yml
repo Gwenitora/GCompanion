@@ -37,10 +37,10 @@ jobs:
           git checkout -B main
           ls -l
 
-      - name: Checkout code
-        uses: actions/checkout@v2 
-        with:
-          fetch-depth: 0
+    #   - name: Checkout code
+    #     uses: actions/checkout@v2
+    #     with:
+    #       fetch-depth: 0
 
       - name: Commit change in local branch
         run: |
