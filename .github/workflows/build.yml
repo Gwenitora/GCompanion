@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feat/github-action
 
 jobs:
   build:
@@ -31,21 +30,19 @@ jobs:
             yarn build
             npx companion-module-build
             mv pkg "../${dir%/}.GCompanion"
-            rm -rf node_modules
             cd ..
+            rm -rf "$dir"
           done
+          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -exec rm -f {} +
 
       - name: Setup branch main
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout -B main
-          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -print
-          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -exec rm -f {} +
 
       - name: Commit change in local branch
         run: |
-          ls -l
           git add .
           git commit -m "Deploy packages to main branch" || echo "No changes to commit"
 
