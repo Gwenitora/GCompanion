@@ -15,34 +15,36 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20.13.1'
+          node-version: '22.8'
 
       - name: Install dependencies and build each directory
         run: |
           for dir in $(ls -d */); do
+            echo "."
+            echo "."
             echo "Processing $dir..."
+            echo "."
+            echo "."
             cd "$dir"
             npm install
             yarn build
             npx companion-module-build
-            mv pkg "../${dir%/}-pkg"  # Renommage du dossier pkg en fonction du nom du dossier
+            mv pkg "../${dir%/}.GCompanion"
             cd ..
+            rm -rf "$dir"
           done
+          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -exec rm -f {} +
 
       - name: Setup branch main
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git checkout -B main
-          rm -rf *  # Supprimer tous les fichiers du répertoire pour cette branche
 
-      - name: Copy built packages to main branch
+      - name: Commit change in local branch
         run: |
-          for dir in *-pkg; do
-            mv "$dir" .
-          done
           git add .
-          git commit -m "Deploy packages to main branch"
+          git commit -m "Deploy packages to main branch" || echo "No changes to commit"
 
       - name: Push changes to main branch
         uses: ad-m/github-push-action@v0.6.0
