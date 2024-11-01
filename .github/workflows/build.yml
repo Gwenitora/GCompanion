@@ -35,7 +35,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout -B main
-          ls -l
+          find ./ -mindepth 1 ! -regex '^.*\.GCompanion' -delete
 
       - name: Commit change in local branch
         run: |
