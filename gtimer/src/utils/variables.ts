@@ -17,8 +17,8 @@ export enum VarDef {
 	Date_Week,
 	Date_WeekDay,
 
-	Date_ClintPoints,
-	Date_Timestamp,
+	Info_ClintPoints,
+	Info_Timestamp,
 
 	Format_Default,
 	Format_Empty,
@@ -49,8 +49,8 @@ class VariablesControl {
 		this.set(VarDef.Date_MonthName, NOW.toLocaleString('default', { month: 'long' }));
 		this.set(VarDef.Date_Week, getWeekNumber(NOW).toString());
 		this.set(VarDef.Date_WeekDay, NOW.toLocaleString('default', { weekday: 'long' }));
-		this.set(VarDef.Date_ClintPoints, NOW.getMilliseconds() < 500 ? ':' : ' ');
-		this.set(VarDef.Date_Timestamp, NOW.getTime().toString());
+		this.set(VarDef.Info_ClintPoints, NOW.getMilliseconds() < 500 ? ':' : ' ');
+		this.set(VarDef.Info_Timestamp, NOW.getTime().toString());
 		this.UpdateVariableValues();
 		this.self?.checkFeedbacks();
 	}
@@ -97,11 +97,11 @@ class VariablesControl {
 			name: 'Current week day'
 		},
 		{
-			variableId: VarDef[VarDef.Date_ClintPoints],
+			variableId: VarDef[VarDef.Info_ClintPoints],
 			name: 'To clint 2 point synk with time'
 		},
 		{
-			variableId: VarDef[VarDef.Date_Timestamp],
+			variableId: VarDef[VarDef.Info_Timestamp],
 			name: 'Current timestamp'
 		},
 		{
