@@ -1,4 +1,4 @@
-import ActionManager from "./actionManager.js";
+import ActionManager from "../managers/actionManager.js";
 
 const setupActions = () => {
     ActionManager

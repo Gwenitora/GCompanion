@@ -55,7 +55,20 @@ class VariablesControl {
 		this.self?.checkFeedbacks();
 	}
 
-	private def = [
+	public InitModuleDef(self: ModuleInstance): void {
+		this.self = self;
+
+		this.set(VarDef.Format_Default, '$M$:$S');
+		this.set(VarDef.Format_Empty, '0');
+		this.set(VarDef.Format_NoZero, '$k$M$:$S');
+		this.set(VarDef.Format_WithHour, '$H$:$M$:$S');
+		this.set(VarDef.Format_WithHourNoZero, '$k$H$:$M$:$S');
+
+		this.Interval();
+		setInterval(() => {this.Interval()}, 42);
+	}
+	
+	private def: {variableId: string, name: string}[] = [
 		{
 			variableId: VarDef[VarDef.Time],
 			name: 'Current time at format: \'dd/mm/yyyy hh:mm:ss\''
@@ -125,19 +138,6 @@ class VariablesControl {
 			name: 'With hour no zero format: \'7:55:05\' or \'42:29\' or \'8\''
 		}
 	]
-
-	public InitModuleDef(self: ModuleInstance): void {
-		this.self = self;
-
-		this.set(VarDef.Format_Default, '$M$:$S');
-		this.set(VarDef.Format_Empty, '0');
-		this.set(VarDef.Format_NoZero, '$k$M$:$S');
-		this.set(VarDef.Format_WithHour, '$H$:$M$:$S');
-		this.set(VarDef.Format_WithHourNoZero, '$k$H$:$M$:$S');
-
-		this.Interval();
-		setInterval(() => {this.Interval()}, 42);
-	}
 
 	//region Global methods
 	public get(key: VarDef | string): string {

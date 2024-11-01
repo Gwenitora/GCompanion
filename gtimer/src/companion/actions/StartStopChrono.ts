@@ -12,8 +12,8 @@ const { maths } = gtools;
 class startStopChrono extends CompanionAction {
     protected name: string = 'Start/Stop Chrono';
     protected description?: string = 'Start a new Chrono or stop it the existing';
-    protected options: SomeCompanionActionInputField[] = [ ...chronoName, ...chronoSetup ]
-    protected learnTimeout?: number | undefined;
+    protected options: SomeCompanionActionInputField[] = [ ...chronoName.action, ...chronoSetup.action ]
+    protected learnTimeout?: number;
 
     protected callback: actionCallback = async (event) => {
         const ch = ChronosColl.AddChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));

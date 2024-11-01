@@ -2,8 +2,8 @@ import { InstanceBase, runEntrypoint, InstanceStatus, SomeCompanionConfigField }
 import { GetConfigFields, type ModuleConfig } from './config.js'
 import VariablesCtrl from './utils/variables.js'
 import { UpgradeScripts } from './upgrades.js'
-import { UpdateFeedbacks } from './feedbacks.js'
 import ActionManager from './managers/actionManager.js'
+import FeedbackManager from './managers/feedbackManager.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig // Setup in init()
@@ -37,11 +37,11 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	}
 
 	updateActions(): void {
-		ActionManager.UpdateActions(this)
+		ActionManager.init().UpdateActions(this)
 	}
 
 	updateFeedbacks(): void {
-		UpdateFeedbacks(this)
+		FeedbackManager.init().UpdateFeedbacks(this)
 	}
 
 	updateVariableDefinitions(): void {

@@ -1,7 +1,7 @@
 import { CompanionActionDefinitions } from "@companion-module/base";
 import CompanionAction from "./actionTemplate.js";
 import { ModuleInstance } from "../main.js";
-import setupActions from "./actionList.js";
+import setupActions from "../companion/actionList.js";
 
 class CompanionActionManager {
     private actions: CompanionAction[] = [];
@@ -26,10 +26,14 @@ class CompanionActionManager {
         return this;
     }
 
-    public UpdateActions(self: ModuleInstance): void {
+    public init(): CompanionActionManager {
         this.actions = [];
         this.companionActions = {};
         setupActions();
+        return this;
+    }
+
+    public UpdateActions(self: ModuleInstance): void {
         for (var i = 0; i < this.actions.length; i++) {
             this.actions[i].setSelf(self);
         }
