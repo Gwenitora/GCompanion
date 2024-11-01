@@ -141,6 +141,9 @@ class VariablesControl {
 
 	//region Global methods
 	public get(key: VarDef | string): string {
+		if (typeof key !== 'string') {
+			key = VarDef[key];
+		}
 		return this.vars[key];
 	}
 	

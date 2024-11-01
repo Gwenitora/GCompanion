@@ -15,3 +15,7 @@ export function evaluateExpression(expression: string): number {
         throw new Error(`Invalid expression: "${expression}"`);
     }
 }
+
+export function parseBool(value: string): boolean {
+    return value === 'true';
+}
