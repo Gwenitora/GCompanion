@@ -21,12 +21,17 @@ jobs:
       - name: Install dependencies and build each directory
         run: |
           for dir in $(ls -d */); do
+            echo ""
+            echo ""
             echo "Processing $dir..."
+            echo ""
+            echo ""
             cd "$dir"
             npm install
             yarn build
             npx companion-module-build
             mv pkg "../${dir%/}.GCompanion"
+            rm -rf node_modules
             cd ..
           done
 
