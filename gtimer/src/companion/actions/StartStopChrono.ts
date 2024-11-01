@@ -24,6 +24,7 @@ class startStopChrono extends CompanionAction {
             ch.Stop();
         }
     }
+    
     protected subscribe: actionSubscribe = async (event) => {
         const ch = ChronosColl.AddChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
         ch.AddInstance(event.id);
@@ -33,6 +34,7 @@ class startStopChrono extends CompanionAction {
             dataLink.setDatas(event.id, event.options.makeUpdate)
         }
     }
+
     protected unsubscribe: actionUnsubscribe = async (event) => {
         const ch = ChronosColl.getChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
         ch?.RemoveInstance(event.id);

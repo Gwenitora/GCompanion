@@ -4,21 +4,21 @@ import { getWeekNumber } from './utils.js';
 export enum VarDef {
 	Time,
 
-	Hour,
-	Minute,
-	Second,
+	Time_Hour,
+	Time_Minute,
+	Time_Second,
 
-	Day,
-	Year,
+	Date_Day,
+	Date_Year,
 
-	Month,
-	MonthName,
+	Date_Month,
+	Date_MonthName,
 
-	Week,
-	WeekDay,
+	Date_Week,
+	Date_WeekDay,
 
-	ClintPoints,
-	Timestamp,
+	Date_ClintPoints,
+	Date_Timestamp,
 
 	Format_Default,
 	Format_Empty,
@@ -40,20 +40,92 @@ class VariablesControl {
 	public Interval(): void {
 		const NOW = new Date(Date.now());
 		this.set(VarDef.Time, NOW.toLocaleString());
-		this.set(VarDef.Hour, (NOW.getHours() < 10 ? '0' : '') + NOW.getHours().toString());
-		this.set(VarDef.Minute, (NOW.getMinutes() < 10 ? '0' : '') + NOW.getMinutes().toString());
-		this.set(VarDef.Second, (NOW.getSeconds() < 10 ? '0' : '') + NOW.getSeconds().toString());
-		this.set(VarDef.Day, (NOW.getDate() < 10 ? '0' : '') + NOW.getDate().toString());
-		this.set(VarDef.Year, (NOW.getFullYear() < 10 ? '0' : '') + NOW.getFullYear().toString());
-		this.set(VarDef.Month, (NOW.getMonth() < 10 ? '0' : '') + NOW.getMonth().toString());
-		this.set(VarDef.MonthName, NOW.toLocaleString('default', { month: 'long' }));
-		this.set(VarDef.Week, getWeekNumber(NOW).toString());
-		this.set(VarDef.WeekDay, NOW.toLocaleString('default', { weekday: 'long' }));
-		this.set(VarDef.ClintPoints, NOW.getMilliseconds() < 500 ? ':' : ' ');
-		this.set(VarDef.Timestamp, NOW.getTime().toString());
+		this.set(VarDef.Time_Hour, (NOW.getHours() < 10 ? '0' : '') + NOW.getHours().toString());
+		this.set(VarDef.Time_Minute, (NOW.getMinutes() < 10 ? '0' : '') + NOW.getMinutes().toString());
+		this.set(VarDef.Time_Second, (NOW.getSeconds() < 10 ? '0' : '') + NOW.getSeconds().toString());
+		this.set(VarDef.Date_Day, (NOW.getDate() < 10 ? '0' : '') + NOW.getDate().toString());
+		this.set(VarDef.Date_Year, (NOW.getFullYear() < 10 ? '0' : '') + NOW.getFullYear().toString());
+		this.set(VarDef.Date_Month, (NOW.getMonth() < 10 ? '0' : '') + NOW.getMonth().toString());
+		this.set(VarDef.Date_MonthName, NOW.toLocaleString('default', { month: 'long' }));
+		this.set(VarDef.Date_Week, getWeekNumber(NOW).toString());
+		this.set(VarDef.Date_WeekDay, NOW.toLocaleString('default', { weekday: 'long' }));
+		this.set(VarDef.Date_ClintPoints, NOW.getMilliseconds() < 500 ? ':' : ' ');
+		this.set(VarDef.Date_Timestamp, NOW.getTime().toString());
 		this.UpdateVariableValues();
 		this.self?.checkFeedbacks();
 	}
+
+	private def = [
+		{
+			variableId: VarDef[VarDef.Time],
+			name: 'Current time at format: \'dd/mm/yyyy hh:mm:ss\''
+		},
+		{
+			variableId: VarDef[VarDef.Time_Hour],
+			name: 'Current hour'
+		},
+		{
+			variableId: VarDef[VarDef.Time_Minute],
+			name: 'Current minute'
+		},
+		{
+			variableId: VarDef[VarDef.Time_Second],
+			name: 'Current second'
+		},
+		{
+			variableId: VarDef[VarDef.Date_Day],
+			name: 'Current day'
+		},
+		{
+			variableId: VarDef[VarDef.Date_Year],
+			name: 'Current year'
+		},
+		{
+			variableId: VarDef[VarDef.Date_Month],
+			name: 'Current month'
+		},
+		{
+			variableId: VarDef[VarDef.Date_MonthName],
+			name: 'Current month name'
+		},
+		{
+			variableId: VarDef[VarDef.Date_Week],
+			name: 'Current week'
+		},
+		{
+			variableId: VarDef[VarDef.Date_WeekDay],
+			name: 'Current week day'
+		},
+		{
+			variableId: VarDef[VarDef.Date_ClintPoints],
+			name: 'To clint 2 point synk with time'
+		},
+		{
+			variableId: VarDef[VarDef.Date_Timestamp],
+			name: 'Current timestamp'
+		},
+		{
+			variableId: VarDef[VarDef.Format_Default],
+			name: 'Default format: \'mm:ss\''
+		},
+		{
+			variableId: VarDef[VarDef.Format_Empty],
+			name: 'Empty format: \'0\''
+		},
+		{
+			variableId: VarDef[VarDef.Format_NoZero],
+			name: 'No zero format: \'16:34\' or \'18\''
+		},
+		{
+			variableId: VarDef[VarDef.Format_WithHour],
+			name: 'With hour format: \'hh:mm:ss\''
+		},
+		{
+			variableId: VarDef[VarDef.Format_WithHourNoZero],
+			name: 'With hour no zero format: \'7:55:05\' or \'42:29\' or \'8\''
+		}
+	]
+
 	public InitModuleDef(self: ModuleInstance): void {
 		this.self = self;
 
@@ -67,6 +139,7 @@ class VariablesControl {
 		setInterval(() => {this.Interval()}, 42);
 	}
 
+	//region Global methods
 	public get(key: VarDef | string): string {
 		return this.vars[key];
 	}
@@ -110,77 +183,7 @@ class VariablesControl {
 		}
 		this.self?.setVariableValues(values);
 	}
-
-	private def = [
-		{
-			variableId: VarDef[VarDef.Time],
-			name: 'Current time at format: \'dd/mm/yyyy hh:mm:ss\''
-		},
-		{
-			variableId: VarDef[VarDef.Hour],
-			name: 'Current hour'
-		},
-		{
-			variableId: VarDef[VarDef.Minute],
-			name: 'Current minute'
-		},
-		{
-			variableId: VarDef[VarDef.Second],
-			name: 'Current second'
-		},
-		{
-			variableId: VarDef[VarDef.Day],
-			name: 'Current day'
-		},
-		{
-			variableId: VarDef[VarDef.Year],
-			name: 'Current year'
-		},
-		{
-			variableId: VarDef[VarDef.Month],
-			name: 'Current month'
-		},
-		{
-			variableId: VarDef[VarDef.MonthName],
-			name: 'Current month name'
-		},
-		{
-			variableId: VarDef[VarDef.Week],
-			name: 'Current week'
-		},
-		{
-			variableId: VarDef[VarDef.WeekDay],
-			name: 'Current week day'
-		},
-		{
-			variableId: VarDef[VarDef.ClintPoints],
-			name: 'To clint 2 point synk with time'
-		},
-		{
-			variableId: VarDef[VarDef.Timestamp],
-			name: 'Current timestamp'
-		},
-		{
-			variableId: VarDef[VarDef.Format_Default],
-			name: 'Default format: \'mm:ss\''
-		},
-		{
-			variableId: VarDef[VarDef.Format_Empty],
-			name: 'Empty format: \'0\''
-		},
-		{
-			variableId: VarDef[VarDef.Format_NoZero],
-			name: 'No zero format: \'16:34\' or \'18\''
-		},
-		{
-			variableId: VarDef[VarDef.Format_WithHour],
-			name: 'With hour format: \'hh:mm:ss\''
-		},
-		{
-			variableId: VarDef[VarDef.Format_WithHourNoZero],
-			name: 'With hour no zero format: \'7:55:05\' or \'42:29\' or \'8\''
-		}
-	]
+	//endregion
 }
 
 const VariablesCtrl = new VariablesControl();
