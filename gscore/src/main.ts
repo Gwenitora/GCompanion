@@ -1,15 +1,16 @@
 import { InstanceBase, runEntrypoint, InstanceStatus, SomeCompanionConfigField } from '@companion-module/base'
 import { GetConfigFields, type ModuleConfig } from './config.js'
-import VariablesCtrl from './variables.js'
+import VariablesCtrl from './utils/variables.js'
 import { UpgradeScripts } from './upgrades.js'
-import { UpdateActions } from './actions.js'
 import { UpdateFeedbacks } from './feedbacks.js'
+import ActionManager from './managers/actionManager.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig // Setup in init()
 
 	constructor(internal: unknown) {
-		super(internal)
+		super(internal);
+		VariablesCtrl.InitModuleDef(this);
 	}
 
 	async init(config: ModuleConfig): Promise<void> {
@@ -36,7 +37,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	}
 
 	updateActions(): void {
-		UpdateActions(this)
+		ActionManager.UpdateActions(this)
 	}
 
 	updateFeedbacks(): void {
@@ -44,7 +45,6 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	}
 
 	updateVariableDefinitions(): void {
-		VariablesCtrl.InitModuleDef(this)
 		VariablesCtrl.UpdateVariableDefinitions()
 	}
 }

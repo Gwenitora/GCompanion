@@ -1,4 +1,4 @@
-import type { ModuleInstance } from './main.js'
+import type { ModuleInstance } from '../main.js'
 import { getWeekNumber } from './utils.js';
 
 export enum VarDef {
@@ -36,6 +36,24 @@ class VariablesControl {
 	constructor() {
 		this.vars = {} as { [key in VarDef]: string };
 	}
+
+	public Interval(): void {
+		const NOW = new Date(Date.now());
+		this.set(VarDef.Time, NOW.toLocaleString());
+		this.set(VarDef.Hour, (NOW.getHours() < 10 ? '0' : '') + NOW.getHours().toString());
+		this.set(VarDef.Minute, (NOW.getMinutes() < 10 ? '0' : '') + NOW.getMinutes().toString());
+		this.set(VarDef.Second, (NOW.getSeconds() < 10 ? '0' : '') + NOW.getSeconds().toString());
+		this.set(VarDef.Day, (NOW.getDate() < 10 ? '0' : '') + NOW.getDate().toString());
+		this.set(VarDef.Year, (NOW.getFullYear() < 10 ? '0' : '') + NOW.getFullYear().toString());
+		this.set(VarDef.Month, (NOW.getMonth() < 10 ? '0' : '') + NOW.getMonth().toString());
+		this.set(VarDef.MonthName, NOW.toLocaleString('default', { month: 'long' }));
+		this.set(VarDef.Week, getWeekNumber(NOW).toString());
+		this.set(VarDef.WeekDay, NOW.toLocaleString('default', { weekday: 'long' }));
+		this.set(VarDef.ClintPoints, NOW.getMilliseconds() < 500 ? ':' : '');
+		this.set(VarDef.Timestamp, NOW.getTime().toString());
+		this.UpdateVariableValues();
+		this.self?.checkFeedbacks();
+	}
 	public InitModuleDef(self: ModuleInstance): void {
 		this.self = self;
 
@@ -45,23 +63,8 @@ class VariablesControl {
 		this.set(VarDef.Format_WithHour, '$H$:$M$:$S');
 		this.set(VarDef.Format_WithHourNoZero, '$k$H$:$M$:$S');
 
-		setInterval(() => {
-			const NOW = new Date(Date.now());
-			this.set(VarDef.Time, NOW.toLocaleString());
-			this.set(VarDef.Hour, (NOW.getHours() < 10 ? '0' : '') + NOW.getHours().toString());
-			this.set(VarDef.Minute, (NOW.getMinutes() < 10 ? '0' : '') + NOW.getMinutes().toString());
-			this.set(VarDef.Second, (NOW.getSeconds() < 10 ? '0' : '') + NOW.getSeconds().toString());
-			this.set(VarDef.Day, (NOW.getDate() < 10 ? '0' : '') + NOW.getDate().toString());
-			this.set(VarDef.Year, (NOW.getFullYear() < 10 ? '0' : '') + NOW.getFullYear().toString());
-			this.set(VarDef.Month, (NOW.getMonth() < 10 ? '0' : '') + NOW.getMonth().toString());
-			this.set(VarDef.MonthName, NOW.toLocaleString('default', { month: 'long' }));
-			this.set(VarDef.Week, getWeekNumber(NOW).toString());
-			this.set(VarDef.WeekDay, NOW.toLocaleString('default', { weekday: 'long' }));
-			this.set(VarDef.ClintPoints, NOW.getMilliseconds() < 500 ? ':' : '');
-			this.set(VarDef.Timestamp, NOW.getTime().toString());
-			this.UpdateVariableValues();
-			self.checkFeedbacks();
-		}, 42);
+		this.Interval();
+		setInterval(() => {this.Interval()}, 42);
 	}
 
 	public get(key: VarDef | string): string {

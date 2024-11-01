@@ -1,7 +1,7 @@
 import { combineRgb } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
-import ChronosColl from './chronosCollection.js';
-import dataLink from './dataLink.js';
+import ChronosColl from './utils/chronosCollection.js';
+import dataLink from './utils/dataLink.js';
 
 export function UpdateFeedbacks(self: ModuleInstance): void {
 	self.setFeedbackDefinitions({
