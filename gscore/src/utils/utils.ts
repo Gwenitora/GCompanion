@@ -12,6 +12,6 @@ export function evaluateExpression(expression: string): number {
         const result = new Function(`return ${expression}`)();
         return Number(result);
     } catch (error) {
-        throw new Error('Invalid expression');
+        throw new Error(`Invalid expression: "${expression}"`);
     }
 }

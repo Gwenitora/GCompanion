@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22.8'
+          node-version: "22.8"
 
       - name: Install dependencies and build each directory
         run: |
@@ -33,7 +33,15 @@ jobs:
             cd ..
             rm -rf "$dir"
           done
+
+      - name: Remove useless files and rename directories for better name
+        run: |
           find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -exec rm -f {} +
+          for dir in */; do
+            dirname="${dir%/}"
+            newname="${dirname:0:-11}"
+            mv "$dirname" "$newname"
+          done
 
       - name: Setup branch main
         run: |
