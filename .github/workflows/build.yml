@@ -21,11 +21,11 @@ jobs:
       - name: Install dependencies and build each directory
         run: |
           for dir in $(ls -d */); do
-            echo ""
-            echo ""
+            echo "."
+            echo "."
             echo "Processing $dir..."
-            echo ""
-            echo ""
+            echo "."
+            echo "."
             cd "$dir"
             npm install
             yarn build
@@ -40,7 +40,6 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout -B main
-          find . -path ./.git -prune -o -name '*.GCompanion' -prune -o
           find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -exec rm -rf {} +
 
       - name: Commit change in local branch
