@@ -1,6 +1,6 @@
 import { SomeCompanionActionInputField } from "@companion-module/base";
 import CompanionAction, { actionCallback } from "../../managers/actionTemplate.js";
-import keysClickable from "../options/KeysClickable.js";
+import keysClickable from "../options/keysClickable.js";
 import { KeyEvent } from "../../utils/input.js";
 
 class virtualKey extends CompanionAction {

@@ -3,6 +3,7 @@ import type { ModuleInstance } from '../main.js'
 export enum VarDef {
 	Preview,
 	GetKeyOn,
+	GloablSpeed
 }
 
 class VariablesControl {
@@ -24,6 +25,7 @@ class VariablesControl {
 		this.self = self;
 		this.set(VarDef.Preview, '');
 		this.set(VarDef.GetKeyOn, 'false');
+		this.set(VarDef.GloablSpeed, '1');
 
 		this.Interval();
 		setInterval(() => {this.Interval()}, 42);
@@ -37,6 +39,10 @@ class VariablesControl {
 		{
 			variableId: VarDef[VarDef.GetKeyOn],
 			name: `If is true, the key of your keyboard is read`
+		},
+		{
+			variableId: VarDef[VarDef.GloablSpeed],
+			name: `The global speed of all animations`
 		}
 	]
 
