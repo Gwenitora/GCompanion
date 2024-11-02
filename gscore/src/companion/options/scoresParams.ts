@@ -7,7 +7,7 @@ const scoresParams: CompanionOptionType = {
             type: 'textinput',
             useVariables: true,
             label: 'Transition time (ms)',
-            default: '2500'
+            default: '5000'
         },
         {
             id: 'digits',

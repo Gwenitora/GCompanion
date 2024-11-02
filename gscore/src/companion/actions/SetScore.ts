@@ -5,6 +5,7 @@ import scoresName from "../options/scoresName.js";
 import scoresParams from "../options/scoresParams.js";
 import VariablesCtrl from "../../utils/variables.js";
 import { VarDef } from "../../utils/variables.js";
+import { evaluateExpression } from "../../utils/utils.js";
 
 class setScore extends CompanionAction {
     protected name: string = 'Set Score from preview';
@@ -16,7 +17,9 @@ class setScore extends CompanionAction {
         const sc = ScoreColl.getScore((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
         sc.Regex = event.options.reg as string;
         sc.Digits = event.options.digits as number;
-        sc.TransiLenght = event.options.transiTime as number;
+        var tTime = evaluateExpression(await this.self.parseVariablesInString(event.options.transiTime as string));
+            tTime = isNaN(tTime) ? 0 : tTime;
+        sc.TransiLenght = tTime < 0 ? 0 : tTime;
         sc.setScore(VariablesCtrl.get(VarDef.Preview));
     }
     
