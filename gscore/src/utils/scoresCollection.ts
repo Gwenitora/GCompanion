@@ -26,7 +26,7 @@ class Score {
         this.score = 0;
         this.target = 0;
         this.digits = 0;
-        this.sigmoideCoeff = 1;
+        this.sigmoideCoeff = .9;
 
         VariablesCtrl.set(this.name, "");
     }
@@ -47,7 +47,7 @@ class Score {
         const NOW = Date.now();
         const dtime = NOW - this.startTimestamp;
         if (dtime < this.transiLenght) {
-            this.score = lerp(this.score, this.target, calculateProgression((dtime / this.transiLenght), this.sigmoideCoeff, true));
+            this.score = lerp(this.score, this.target, calculateProgression((dtime / this.transiLenght), this.sigmoideCoeff));
         } else {
             this.score = this.target;
         }

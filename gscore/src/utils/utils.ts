@@ -1,3 +1,5 @@
+type p= {x: number, y: number};
+
 export function getWeekNumber(date: Date): number {
     const target = new Date(date.valueOf());
     const dayNumber = (target.getDay() + 6) % 7;
@@ -24,22 +26,38 @@ export function lerp(a: number, b: number, t: number): number {
     return a + (b - a) * t;
 }
 
-export function bezier4points(x: number, p0: {x: number, y: number}, p1: {x: number, y: number}, p2: {x: number, y: number}, p3: {x: number, y: number}): number {
+export function bezier4points(x: number, p0: p, p1: p, p2: p, p3: p): number {
     return (1 - x) ** 3 * p0.y + 3 * (1 - x) ** 2 * x * p1.y + 3 * (1 - x) * x ** 2 * p2.y + x ** 3 * p3.y;
 }
 
-export function calculateProgression(x: number, k: number, sens: boolean): number {
-    var p0 = { x: 0, y: 0     };
-    var p1 = { x: 0, y: k     };
-    var p2 = { x: 1, y: 1 - k };
-    var p3 = { x: 1, y: 1     };
-    if (sens) {
-        var tx = p1.y;
-        p1.y = p1.x;
-        p1.x = tx;
-        tx = p2.y;
-        p2.y = p2.x;
-        p2.x = tx;
+export function calculateProgression(x: number, k: number): number {
+    return x;
+    var p0: [p, p, p, p] = [
+        { x: 0, y: 0        },
+        { x: 0, y: .1       },
+        { x: .9-k, y: k-.1  },
+        { x: 1-k, y: k      }
+    ];
+    var p1: [p, p, p, p] = [
+        { x: 1-k, y: k      },
+        { x: 1.1-k, y: k+.1 },
+        { x: .9, y: 1       },
+        { x: 1, y: 1        }
+    ];
+    if (k > .5) {
+        var tmp = p0[1].y;
+        p0[1].y = p1[1].x;
+        p1[1].x = tmp;
+        tmp = p1[2].y;
+        p1[2].y = p0[2].x;
+        p0[2].x = tmp;
     }
-    return bezier4points(x, p0, p1, p2, p3);
+    if (k === .5) {
+        p0[1].x = p1[1].y;
+        p1[2].y = p0[2].x;
+    }
+    if (x > 1-k) {
+        return bezier4points(x, ...p1);
+    }
+    return bezier4points(x, ...p0);
 }
