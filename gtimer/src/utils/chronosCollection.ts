@@ -136,7 +136,7 @@ class Chrono {
         VariablesCtrl.set(this.name + '-Seconds', maths.floor(date.getTime() / 1000).toString());
     }
 
-    public AddInstance(instance: string): void {
+    public addInstance(instance: string): void {
         if (this.instances.includes(instance)) return;
         this.instances.push(instance);
     }
@@ -149,7 +149,7 @@ class Chrono {
             if (this.instances.length === 0) {
                 ChronosColl.Delete(this.name.split("-")[1]);
             }
-        }, 200)
+        }, 50)
     }
 }
 
@@ -167,11 +167,11 @@ class ChronosCollection {
         }, 23);
     }
 
-    public existChrono(key: string): boolean {
+    public ExistChrono(key: string): boolean {
         return this.chronos[key] !== undefined;
     }
 
-    public AddChrono(key: string): Chrono {
+    public addChrono(key: string): Chrono {
         if (this.chronos[key] !== undefined) return this.getChrono(key);
         this.chronos[key] = new Chrono(`Chrono-${key}`);
         return this.getChrono(key);
@@ -189,7 +189,6 @@ class ChronosCollection {
 
     public Delete(key: string): void {
         if (this.chronos[key] === undefined) return;
-        delete this.chronos[key];
         VariablesCtrl.del(`Chrono-${key}`);
         VariablesCtrl.del(`Chrono-${key}-Seconds`);
     }

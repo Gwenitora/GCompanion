@@ -1,6 +1,9 @@
 import type { ModuleInstance } from '../main.js'
 
 export enum VarDef {
+	Preview,
+	GetKeyOn,
+	GloablSpeed
 }
 
 class VariablesControl {
@@ -20,15 +23,34 @@ class VariablesControl {
 
 	public InitModuleDef(self: ModuleInstance): void {
 		this.self = self;
+		this.set(VarDef.Preview, '');
+		this.set(VarDef.GetKeyOn, 'false');
+		this.set(VarDef.GloablSpeed, '1');
 
 		this.Interval();
 		setInterval(() => {this.Interval()}, 42);
 	}
 
-	private def: {variableId: string, name: string}[] = []
+	private def: {variableId: string, name: string}[] = [
+		{
+			variableId: VarDef[VarDef.Preview],
+			name: `To preview the result of your selection`
+		},
+		{
+			variableId: VarDef[VarDef.GetKeyOn],
+			name: `If is true, the key of your keyboard is read`
+		},
+		{
+			variableId: VarDef[VarDef.GloablSpeed],
+			name: `The global speed of all animations`
+		}
+	]
 
 	//region Global methods
 	public get(key: VarDef | string): string {
+		if (typeof key !== 'string') {
+			key = VarDef[key];
+		}
 		return this.vars[key];
 	}
 	

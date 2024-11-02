@@ -4,6 +4,7 @@ import VariablesCtrl from './utils/variables.js'
 import { UpgradeScripts } from './upgrades.js'
 import ActionManager from './managers/actionManager.js'
 import FeedbackManager from './managers/feedbackManager.js'
+import initInputs from './utils/input.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig // Setup in init()
@@ -11,6 +12,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	constructor(internal: unknown) {
 		super(internal);
 		VariablesCtrl.InitModuleDef(this);
+		initInputs();
 	}
 
 	async init(config: ModuleConfig): Promise<void> {

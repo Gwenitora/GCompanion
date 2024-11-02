@@ -16,7 +16,7 @@ class startStopChrono extends CompanionAction {
     protected learnTimeout?: number;
 
     protected callback: actionCallback = async (event) => {
-        const ch = ChronosColl.AddChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
+        const ch = ChronosColl.addChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
         await this.updateDatasChrono(ch, event);
         if (!ch.IsStarted) {
             ch.Start();
@@ -26,8 +26,8 @@ class startStopChrono extends CompanionAction {
     }
     
     protected subscribe: actionSubscribe = async (event) => {
-        const ch = ChronosColl.AddChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
-        ch.AddInstance(event.id);
+        const ch = ChronosColl.addChrono((await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
+        ch.addInstance(event.id);
 
         if (event.options.makeUpdate !== dataLink.getDatas(event.id)) {
             await this.updateDatasChrono(ch, event);

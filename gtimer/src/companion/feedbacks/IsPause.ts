@@ -1,4 +1,4 @@
-import { CompanionFeedbackInfo, SomeCompanionFeedbackInputField } from "@companion-module/base/dist/index.js";
+import { SomeCompanionFeedbackInputField } from "@companion-module/base/dist/index.js";
 import CompanionFeedback, { feedbackCallback, feedbackDefaultStyle, feedbackSubscribe } from "../../managers/feedbackTemplate.js";
 import chronoName from "../options/chronoName.js";
 import dataLink from "../../utils/dataLink.js";
@@ -16,7 +16,7 @@ class isPause extends CompanionFeedback<'boolean'> {
     protected options: SomeCompanionFeedbackInputField[] = [ ...chronoName.feedback ];
     protected learnTimeout?: number;
 
-    protected callback: feedbackCallback<'boolean'> = async (event: CompanionFeedbackInfo) => {
+    protected callback: feedbackCallback<'boolean'> = async (event) => {
         try {
             return ChronosColl.getChrono(dataLink.getDatas(event.id)).IsPaused;
         } catch (e) {
@@ -24,7 +24,7 @@ class isPause extends CompanionFeedback<'boolean'> {
         }
     }
 
-    protected subscribe: feedbackSubscribe = async (event: CompanionFeedbackInfo) => {
+    protected subscribe: feedbackSubscribe = async (event) => {
         dataLink.setDatas(event.id, (await this.self.parseVariablesInString(event.options.name as string)).replaceAll('-', '_').trim().replaceAll(' ', '_'));
     }
     protected unsubscribe?: undefined;
