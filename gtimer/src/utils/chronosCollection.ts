@@ -1,6 +1,4 @@
 import VariablesCtrl from './variables.js'
-import gtools from '@gscript/gtools';
-const { maths } = gtools;
 
 class Chrono {
     private name: string;
@@ -72,7 +70,7 @@ class Chrono {
         }
         if (this.isStarted) {
             if (!this.isPaused) {
-                this.pausedDecal = maths.floor(this.pausedDecal / 1000) * 1000;
+                this.pausedDecal = Math.floor(this.pausedDecal / 1000) * 1000;
                 if (this.lenght && this.lenght > 0 && NOW - this.startTimestamp - this.pausedDecal > this.lenght * 1000) {
                     this.Stop();
                 }
@@ -91,7 +89,7 @@ class Chrono {
         const date = new Date(dTime);
         const minutes = date.getUTCMinutes();
         const seconds = date.getUTCSeconds();
-        const hours = maths.floor(date.getTime() / (1000 * 60 * 60));
+        const hours = Math.floor(date.getTime() / (1000 * 60 * 60));
         const ms = date.getUTCMilliseconds();
         var time = (this.isStarted ? this.regex : this.regexEnd)
             .replaceAll("$h", hours.toString())
@@ -133,7 +131,7 @@ class Chrono {
         time = (time === "" ? "0" : time)
             .replaceAll("$\\", '$');
         VariablesCtrl.set(this.name, time);
-        VariablesCtrl.set(this.name + '-Seconds', maths.floor(date.getTime() / 1000).toString());
+        VariablesCtrl.set(this.name + '-Seconds', Math.floor(date.getTime() / 1000).toString());
     }
 
     public addInstance(instance: string): void {

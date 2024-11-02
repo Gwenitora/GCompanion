@@ -15,3 +15,7 @@ export function evaluateExpression(expression: string): number {
         throw new Error(`Invalid expression: "${expression}"`);
     }
 }
+
+export function mod(a: number, b: number): number {
+    return ((a % b) + b) % b;
+}
