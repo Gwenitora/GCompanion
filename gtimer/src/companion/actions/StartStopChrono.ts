@@ -1,13 +1,10 @@
 import { CompanionActionEvent, CompanionActionInfo, SomeCompanionActionInputField } from "@companion-module/base";
 import CompanionAction, { actionCallback, actionSubscribe, actionUnsubscribe } from "../../managers/actionTemplate.js";
 import ChronosColl from "../../utils/chronosCollection.js";
-import { evaluateExpression } from "../../utils/utils.js";
+import { evaluateExpression, mod } from "../../utils/utils.js";
 import dataLink from "../../utils/dataLink.js";
 import chronoName from "../options/chronoName.js";
 import chronoSetup from "../options/chronosSetup.js";
-
-import gtools from '@gscript/gtools';
-const { maths } = gtools;
 
 class startStopChrono extends CompanionAction {
     protected name: string = 'Start/Stop Chrono';
@@ -55,11 +52,11 @@ class startStopChrono extends CompanionAction {
         var Lenght = hou * 60 * 60 + min * 60 + sec;
         ch.Lenght = Lenght;
         if (event.options.cmode as boolean) {
-            Lenght = maths.mod(Lenght, (24 * 60 * 60));
+            Lenght = mod(Lenght, (24 * 60 * 60));
             const date = new Date(Date.now());
             const now = (date.getHours() * 60 + date.getMinutes()) * 60 + date.getSeconds();
             Lenght = Lenght - now;
-            ch.Lenght = maths.mod(Lenght, (24 * 60 * 60));
+            ch.Lenght = mod(Lenght, (24 * 60 * 60));
         }
         ch.Regex = await this.self.parseVariablesInString(event.options.reg as string);
         ch.RegexEnd = await this.self.parseVariablesInString(event.options.regEnd as string);

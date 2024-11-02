@@ -61,3 +61,7 @@ export function calculateProgression(x: number, k: number): number {
     }
     return bezier4points(x, ...p0);
 }
+
+export function mod(a: number, b: number): number {
+    return ((a % b) + b) % b;
+}
