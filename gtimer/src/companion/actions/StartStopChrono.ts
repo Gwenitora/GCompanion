@@ -7,6 +7,7 @@ import chronoName from "../options/chronoName.js";
 import chronoSetup from "../options/chronosSetup.js";
 
 class startStopChrono extends CompanionAction {
+    protected id: string = 'startStopChrono';
     protected name: string = 'Start/Stop Chrono';
     protected description?: string = 'Start a new Chrono or stop it the existing';
     protected options: SomeCompanionActionInputField[] = [ ...chronoName.action, ...chronoSetup.action ]

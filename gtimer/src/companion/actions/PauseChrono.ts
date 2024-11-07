@@ -4,6 +4,7 @@ import ChronosColl from "../../utils/chronosCollection.js";
 import chronoName from "../options/chronoName.js";
 
 class pauseChrono extends CompanionAction {
+    protected id: string = 'pauseChrono';
     protected name: string = 'Pause/Resume Chrono';
     protected description?: string = 'Pause or resume a chrono';
     protected options: SomeCompanionActionInputField[] = [ ...chronoName.action ];

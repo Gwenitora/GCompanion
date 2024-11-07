@@ -4,6 +4,7 @@ import keysClickable from "../options/keysClickable.js";
 import { KeyEvent } from "../../utils/input.js";
 
 class virtualKey extends CompanionAction {
+    protected id: string = 'virtualKey';
     protected name: string = 'Press key';
     protected description?: string = 'If you don\'t have a keyboard, or don\'t wan\'t to use them, you can press a key here. (getting key don\'t need to be enabled)';
     protected options: SomeCompanionActionInputField[] = [ ...keysClickable.action ];

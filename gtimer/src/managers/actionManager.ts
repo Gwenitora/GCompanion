@@ -12,7 +12,7 @@ class CompanionActionManager {
 
     public addAction(action: CompanionAction): CompanionActionManager {
         this.actions.push(action);
-        this.companionActions[action.constructor.name] = {
+        this.companionActions[action.Id] = {
             name: action.Name,
             description: action.Description,
             options: action.Options,
