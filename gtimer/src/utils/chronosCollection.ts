@@ -189,6 +189,7 @@ class ChronosCollection {
         if (this.chronos[key] === undefined) return;
         VariablesCtrl.del(`Chrono-${key}`);
         VariablesCtrl.del(`Chrono-${key}-Seconds`);
+        delete this.chronos[key];
     }
 
     public DeleteAll(): void {
