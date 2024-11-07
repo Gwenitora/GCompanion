@@ -1,4 +1,5 @@
-import { calculateProgression, evaluateExpression, lerp } from './utils.js';
+import { Easing } from './easing.js';
+import { evaluateExpression, lerp } from './utils.js';
 import VariablesCtrl from './variables.js'
 
 class Score {
@@ -11,12 +12,13 @@ class Score {
     private score: number;
     private target: number;
     private digits: number;
-    private sigmoideCoeff: number;
+    private easing: {algo: Easing.algorithm, type: Easing.curve};
 
     public set TransiLenght(value: number) { this.transiLenght = isNaN(value) ? 0 : value; }
     public set Regex(value: string) { this.regex = value; }
     public set Digits(value: number) { this.digits = isNaN(value) ? 0 : value; }
-    public set SigmoideCoeff(value: number) { this.sigmoideCoeff = isNaN(value) ? 1 : value; }
+    public set EasingAlgo(algo: Easing.algorithm) { this.easing.algo = algo; }
+    public set EasingType(type: Easing.curve) { this.easing.type = type; }
 
     constructor(name: string) {
         this.name = name;
@@ -26,7 +28,7 @@ class Score {
         this.score = 0;
         this.target = 0;
         this.digits = 0;
-        this.sigmoideCoeff = .9;
+        this.easing = {algo: 'linear', type: 'ease-in'};
 
         VariablesCtrl.set(this.name, "");
     }
@@ -47,7 +49,7 @@ class Score {
         const NOW = Date.now();
         const dtime = NOW - this.startTimestamp;
         if (dtime < this.transiLenght) {
-            this.score = lerp(this.score, this.target, calculateProgression((dtime / this.transiLenght), this.sigmoideCoeff));
+            this.score = lerp(this.score, this.target, this.transiLenght === 0 ? 0 : Easing.getEasing(this.easing.algo, this.easing.type)(dtime / this.transiLenght));
         } else {
             this.score = this.target;
         }

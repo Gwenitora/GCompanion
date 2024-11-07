@@ -13,7 +13,7 @@ class virtualKey extends CompanionAction {
     protected callback: actionCallback = (event) => {
         KeyEvent({
             name: event.options.key,
-        } as any, true)
+        } as any, {}, true)
     }
     
     protected subscribe?: undefined;

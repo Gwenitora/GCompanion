@@ -21,6 +21,8 @@ class setScore extends CompanionAction {
         var tTime = evaluateExpression(await this.self.parseVariablesInString(event.options.transiTime as string));
             tTime = isNaN(tTime) ? 0 : tTime;
         sc.TransiLenght = tTime < 0 ? 0 : tTime;
+        sc.EasingAlgo = event.options.transitionAlgorithm as any;
+        sc.EasingType = event.options.fadeType as any;
         sc.setScore(VariablesCtrl.get(VarDef.Preview));
     }
     

@@ -25,8 +25,8 @@ const keysClickable: CompanionOptionType = {
                 { id: 'NUMPAD MULTIPLY', label: 'multiply' },
                 { id: 'NUMPAD MINUS', label: 'minus' },
                 { id: 'NUMPAD PLUS', label: 'plus' },
-                { id: 'LEFT ARROW', label: 'left parenthèse (arrow left on keyboard)' },
-                { id: 'RIGHT ARROW', label: 'right parenthèse (arrow right on keyboard)' }
+                { id: 'O', label: 'left parenthèse: \'(\'' },
+                { id: 'C', label: 'right parenthèse: \')\'' }
             ]
         }
     ],
