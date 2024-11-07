@@ -27,8 +27,7 @@ jobs:
             echo "."
             cd "$dir"
             npm install
-            yarn build
-            npx companion-module-build
+            npm run pack
             mv pkg "../${dir%/}.GCompanion"
             cd ..
             rm -rf "$dir"

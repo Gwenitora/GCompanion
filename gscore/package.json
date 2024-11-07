@@ -4,13 +4,13 @@
 	"main": "dist/main.js",
 	"type": "module",
 	"scripts": {
-		"postinstall": "husky",
-		"format": "prettier -w .",
-		"pack": "yarn build && companion-module-build",
-		"build": "rimraf dist && yarn build:main",
-		"build:main": "tsc -p tsconfig.build.json",
-		"dev": "tsc -p tsconfig.build.json --watch",
-		"lint:raw": "eslint",
+		"postinstall": "npx husky",
+		"format": "npx prettier -w .",
+		"pack": "yarn build && npx companion-module-build && cd pkg && sed -i 's/\\.\\.\\/\\.\\.\\/bin\\//\\.\\/companion\\/bin\\//g' main.js",
+		"build": "npx rimraf dist && yarn build:main",
+		"build:main": "npx tsc -p tsconfig.build.json",
+		"dev": "npx tsc -p tsconfig.build.json --watch",
+		"lint:raw": "npx eslint",
 		"lint": "yarn lint:raw ."
 	},
 	"license": "MIT",
@@ -20,10 +20,10 @@
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.11.0",
-		"node-global-key-listener": "^0.3.0",
 		"yarn": "^1.22.22"
 	},
 	"devDependencies": {
+		"node-global-key-listener": "^0.3.0",
 		"@companion-module/tools": "^2.1.0",
 		"@types/node": "^22.6.1",
 		"eslint": "^9.11.1",
