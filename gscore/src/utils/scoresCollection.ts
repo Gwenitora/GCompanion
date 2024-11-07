@@ -123,6 +123,7 @@ class ScroresCollection {
     public Delete(key: string): void {
         if (this.scores[key] === undefined) return;
         VariablesCtrl.del(`Score-${key}`);
+        delete this.scores[key];
     }
 
     public DeleteAll(): void {
