@@ -14,6 +14,7 @@ export type feedbackLearn = (event: CompanionFeedbackInfo, context: CompanionFee
 abstract class CompanionFeedback<T extends feedbackType> {
     protected self: ModuleInstance;
 
+    protected abstract id: string;
     protected abstract name: string;
     protected abstract description?: string;
     protected abstract type: T;
@@ -34,6 +35,7 @@ abstract class CompanionFeedback<T extends feedbackType> {
         this.self = self;
     }
 
+    public get Id(): string { return this.id; }
     public get Name(): string { return this.name; }
     public get Description(): string | undefined { return this.description; }
     public get Type(): T { return this.type; }

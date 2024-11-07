@@ -8,6 +8,7 @@ import { VarDef } from "../../utils/variables.js";
 import { evaluateExpression } from "../../utils/utils.js";
 
 class setScore extends CompanionAction {
+    protected id: string = 'setScore';
     protected name: string = 'Set Score from preview';
     protected description?: string = 'To set the score, you can use the preview to write the score you want, and then press this button to set it. (all mode compatible with that one: set, reset, add & sub)';
     protected options: SomeCompanionActionInputField[] = [ ...scoresName.action, ...scoresParams.action ];

@@ -12,7 +12,7 @@ class CompanionFeedbacksManager {
 
     public addFeedback(feedback: CompanionFeedback<feedbackType>): CompanionFeedbacksManager {
         this.feedbacks.push(feedback);
-        this.companionFeedbacks[feedback.constructor.name] = {
+        this.companionFeedbacks[feedback.Id] = {
             name: feedback.Name,
             description: feedback.Description,
             type: feedback.Type,

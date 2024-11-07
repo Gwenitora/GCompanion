@@ -5,6 +5,7 @@ import dataLink from "../../utils/dataLink.js";
 import ChronosColl from "../../utils/chronosCollection.js";
 
 class isPause extends CompanionFeedback<'boolean'> {
+    protected id: string = 'isPause';
     protected name: string = 'Chrono pauseed';
     protected description?: string = 'Check if a chrono is paused, if is not running, is never paused';
     protected type: 'boolean' = 'boolean';
