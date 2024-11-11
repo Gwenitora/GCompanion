@@ -1,6 +1,6 @@
 import VariablesCtrl from './variables.js'
 
-class Chrono {
+export class Chrono {
     private name: string;
     private startTimestamp: number;
     private lastTimestamp: number;
@@ -17,6 +17,8 @@ class Chrono {
 
     public get IsPaused(): boolean { return this.isPaused; }
     public get IsStarted(): boolean { return this.isStarted; }
+    public get StartTimestamp(): number { return this.startTimestamp; }
+    public get PauseDecal(): number { return this.pausedDecal; }
     public set ResetOnEnd(value: boolean) { this.resetOnEnd = value; }
     public set CountDown(value: boolean) {this.sens = value ? "down" : "up";}
     public set Lenght(value: number) { this.lenght = isNaN(value) ? 0 : value; }

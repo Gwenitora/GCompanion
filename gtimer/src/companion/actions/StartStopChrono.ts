@@ -1,6 +1,6 @@
 import { CompanionActionEvent, CompanionActionInfo, SomeCompanionActionInputField } from "@companion-module/base";
 import CompanionAction, { actionCallback, actionSubscribe, actionUnsubscribe } from "../../managers/actionTemplate.js";
-import ChronosColl from "../../utils/chronosCollection.js";
+import ChronosColl, { Chrono } from "../../utils/chronosCollection.js";
 import { evaluateExpression, mod } from "../../utils/utils.js";
 import dataLink from "../../utils/dataLink.js";
 import chronoName from "../options/chronoName.js";
@@ -41,7 +41,7 @@ class startStopChrono extends CompanionAction {
     protected learn?: undefined;
 
 
-    private async updateDatasChrono(ch: any, event: CompanionActionEvent | CompanionActionInfo) {
+    private async updateDatasChrono(ch: Chrono, event: CompanionActionEvent | CompanionActionInfo) {
         ch.CountDown = event.options.countdown as boolean;
         ch.ResetOnEnd = event.options.reset as boolean;
         var hou = evaluateExpression(await this.self.parseVariablesInString(event.options.hou as string));
@@ -51,13 +51,22 @@ class startStopChrono extends CompanionAction {
         min = min ? min : 0;
         sec = sec ? sec : 0;
         var Lenght = hou * 60 * 60 + min * 60 + sec;
-        ch.Lenght = Lenght;
         if (event.options.cmode as boolean) {
             Lenght = mod(Lenght, (24 * 60 * 60));
-            const date = new Date(Date.now());
-            const now = (date.getHours() * 60 + date.getMinutes()) * 60 + date.getSeconds();
+            var date;
+            var now;
+            if (ch.IsStarted) {
+                now = ch.StartTimestamp;
+                date = new Date(now);
+                now = (date.getHours() * 60 + date.getMinutes()) * 60 + date.getSeconds();
+            } else {
+                date = new Date(Date.now());
+                now = (date.getHours() * 60 + date.getMinutes()) * 60 + date.getSeconds();
+            }
             Lenght = Lenght - now;
             ch.Lenght = mod(Lenght, (24 * 60 * 60));
+        } else {
+            ch.Lenght = Lenght;
         }
         ch.Regex = await this.self.parseVariablesInString(event.options.reg as string);
         ch.RegexEnd = await this.self.parseVariablesInString(event.options.regEnd as string);
