@@ -4,7 +4,7 @@ import VariablesCtrl from './utils/variables.js'
 import { UpgradeScripts } from './upgrades.js'
 import ActionManager from './managers/actionManager.js'
 import FeedbackManager from './managers/feedbackManager.js'
-import initInputs from './utils/input.js'
+import PresetManager from './managers/presetManager.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig // Setup in init()
@@ -12,7 +12,6 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	constructor(internal: unknown) {
 		super(internal);
 		VariablesCtrl.InitModuleDef(this);
-		initInputs();
 	}
 
 	async init(config: ModuleConfig): Promise<void> {
@@ -22,6 +21,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
+		this.updatePresets() // export presets
 		this.updateVariableDefinitions() // export variable definitions
 	}
 	// When module gets deleted
@@ -44,6 +44,10 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 	updateFeedbacks(): void {
 		FeedbackManager.init().UpdateFeedbacks(this)
+	}
+
+	updatePresets(): void {
+		PresetManager.init().UpdatePresets(this)
 	}
 
 	updateVariableDefinitions(): void {
