@@ -1,16 +1,16 @@
 import { CompanionFeedbackDefinitions } from "@companion-module/base";
-import CompanionFeedback, { feedbackType } from "./feedbackTemplate.js";
+import CompFeedback, { feedbackType } from "./feedbackTemplate.js";
 import { ModuleInstance } from "../main.js";
 import setupFeedbacks from "../companion/feedbackList.js";
 
-class CompanionFeedbacksManager {
-    private feedbacks: CompanionFeedback<feedbackType>[] = [];
+class CompFeedbacksManager {
+    private feedbacks: CompFeedback<feedbackType>[] = [];
     private companionFeedbacks: CompanionFeedbackDefinitions = {};
 
     constructor() {
     }
 
-    public addFeedback(feedback: CompanionFeedback<feedbackType>): CompanionFeedbacksManager {
+    public addFeedback(feedback: CompFeedback<feedbackType>): CompFeedbacksManager {
         this.feedbacks.push(feedback);
         this.companionFeedbacks[feedback.Id] = {
             name: feedback.Name,
@@ -29,7 +29,7 @@ class CompanionFeedbacksManager {
         return this;
     }
 
-    public init(): CompanionFeedbacksManager {
+    public init(): CompFeedbacksManager {
         this.feedbacks = [];
         this.companionFeedbacks = {};
         setupFeedbacks();
@@ -44,5 +44,5 @@ class CompanionFeedbacksManager {
     }
 }
 
-const FeedbackManager = new CompanionFeedbacksManager();
+const FeedbackManager = new CompFeedbacksManager();
 export default FeedbackManager;

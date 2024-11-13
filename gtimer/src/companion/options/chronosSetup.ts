@@ -1,4 +1,4 @@
-import CompanionOptionType from "../../managers/optionTypes.js";
+import CompOptionType from "../../managers/optionTypes.js";
 
 const formatTolltip = (
     'To make a text, just use this text text.\nTo make a variable, use \'$H\', the variable has already 1 character for the name, and the case is important.' +
@@ -11,7 +11,7 @@ const formatTolltip = (
     '\n- $k -> To remove text if 0 (ex: $k$H:$M:$S -> 8:00 | $k$H:$M:$K$S -> 8:00 | $k$H:$M$K:$k$S -> 42:)'
 ).replaceAll('\n-', '\n•')
 
-const chronoSetup: CompanionOptionType = {
+const chronoSetup: CompOptionType = {
     action: [
         {
             id: 'hou',

@@ -1,10 +1,10 @@
 import { CompanionButtonPresetOptions, CompanionButtonStyleProps } from "@companion-module/base";
-import { CompanionPresetButton } from "../../../managers/presetTemplate.js";
-import CompanionPresetCategories from "../Categories.js";
+import { CompPresetButton } from "../../../managers/presetTemplate.js";
+import CompPresetCategories from "../Categories.js";
 
-class FullDates extends CompanionPresetButton {
+class FullDates extends CompPresetButton {
     id = 'testBId';
-    category = CompanionPresetCategories.Dates;
+    category = CompPresetCategories.Dates;
     name = 'Test Preset';
 
     options = {

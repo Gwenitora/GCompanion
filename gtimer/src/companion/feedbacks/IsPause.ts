@@ -1,10 +1,10 @@
 import { SomeCompanionFeedbackInputField } from "@companion-module/base/dist/index.js";
-import CompanionFeedback, { feedbackCallback, feedbackDefaultStyle, feedbackSubscribe } from "../../managers/feedbackTemplate.js";
+import CompFeedback, { feedbackCallback, feedbackDefaultStyle, feedbackSubscribe } from "../../managers/feedbackTemplate.js";
 import chronoName from "../options/chronoName.js";
 import dataLink from "../../utils/dataLink.js";
 import ChronosColl from "../../utils/chronosCollection.js";
 
-class isPause extends CompanionFeedback<'boolean'> {
+class isPause extends CompFeedback<'boolean'> {
     protected id: string = 'isPause';
     protected name: string = 'Chrono pauseed';
     protected description?: string = 'Check if a chrono is paused, if is not running, is never paused';

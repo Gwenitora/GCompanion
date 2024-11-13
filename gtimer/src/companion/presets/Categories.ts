@@ -1,5 +1,5 @@
-enum CompanionPresetCategories {
+enum CompPresetCategories {
     Dates = 'Dates',
 }
 
-export default CompanionPresetCategories;
+export default CompPresetCategories;

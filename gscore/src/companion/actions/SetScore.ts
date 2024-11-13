@@ -1,5 +1,5 @@
 import { SomeCompanionActionInputField } from "@companion-module/base";
-import CompanionAction, { actionCallback, actionSubscribe, actionUnsubscribe } from "../../managers/actionTemplate.js";
+import CompAction, { actionCallback, actionSubscribe, actionUnsubscribe } from "../../managers/actionTemplate.js";
 import ScoreColl from "../../utils/scoresCollection.js";
 import scoresName from "../options/scoresName.js";
 import scoresParams from "../options/scoresParams.js";
@@ -7,7 +7,7 @@ import VariablesCtrl from "../../utils/variables.js";
 import { VarDef } from "../../utils/variables.js";
 import { evaluateExpression } from "../../utils/utils.js";
 
-class setScore extends CompanionAction {
+class setScore extends CompAction {
     protected id: string = 'setScore';
     protected name: string = 'Set Score from preview';
     protected description?: string = 'To set the score, you can use the preview to write the score you want, and then press this button to set it. (all mode compatible with that one: set, reset, add & sub)';

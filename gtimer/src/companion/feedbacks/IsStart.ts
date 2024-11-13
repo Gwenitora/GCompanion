@@ -1,10 +1,10 @@
 import { SomeCompanionFeedbackInputField } from "@companion-module/base/dist/index.js";
-import CompanionFeedback, { feedbackCallback, feedbackDefaultStyle, feedbackSubscribe } from "../../managers/feedbackTemplate.js";
+import CompFeedback, { feedbackCallback, feedbackDefaultStyle, feedbackSubscribe } from "../../managers/feedbackTemplate.js";
 import chronoName from "../options/chronoName.js";
 import dataLink from "../../utils/dataLink.js";
 import ChronosColl from "../../utils/chronosCollection.js";
 
-class isStart extends CompanionFeedback<'boolean'> {
+class isStart extends CompFeedback<'boolean'> {
     protected id: string = 'isStart';
     protected name: string = 'Chrono running';
     protected description?: string = 'Check if a chrono is running';

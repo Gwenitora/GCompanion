@@ -6,7 +6,7 @@ export type actionSubscribe = (event: CompanionActionInfo, context: CompanionAct
 export type actionUnsubscribe = (event: CompanionActionInfo, context: CompanionActionContext) => Promise<void> | void;
 export type actionLearn = (event: CompanionActionEvent, context: CompanionActionContext) => CompanionOptionValues | undefined | Promise<CompanionOptionValues | undefined>;
 
-abstract class CompanionAction {
+abstract class CompAction {
     protected self: ModuleInstance;
 
     protected abstract id: string;
@@ -39,4 +39,4 @@ abstract class CompanionAction {
     public get Learn(): actionLearn | undefined { return this.learn; }
 }
 
-export default CompanionAction;
+export default CompAction;

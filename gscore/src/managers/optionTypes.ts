@@ -1,8 +1,8 @@
 import { SomeCompanionActionInputField, SomeCompanionFeedbackInputField } from "@companion-module/base/dist/index.js"
 
-type CompanionOptionType = {
+type CompOptionType = {
     action: SomeCompanionActionInputField[],
     feedback: SomeCompanionFeedbackInputField[]
 }
 
-export default CompanionOptionType;
+export default CompOptionType;

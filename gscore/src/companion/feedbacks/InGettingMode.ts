@@ -1,9 +1,9 @@
 import { SomeCompanionFeedbackInputField } from "@companion-module/base/dist/index.js";
-import CompanionFeedback, { feedbackCallback, feedbackDefaultStyle } from "../../managers/feedbackTemplate.js";
+import CompFeedback, { feedbackCallback, feedbackDefaultStyle } from "../../managers/feedbackTemplate.js";
 import { parseBool } from "../../utils/utils.js";
 import VariablesCtrl, { VarDef } from "../../utils/variables.js";
 
-class inGettingMode extends CompanionFeedback<'boolean'> {
+class inGettingMode extends CompFeedback<'boolean'> {
     protected id: string = 'inGettingMode';
     protected name: string = 'Getting key enabled ?';
     protected description?: string = 'The app do not read the key of your keyboard every time, but you can see if he take here.';

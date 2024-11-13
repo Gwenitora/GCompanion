@@ -1,17 +1,17 @@
 import { CompanionPresetDefinitions } from "@companion-module/base";
 import { ModuleInstance } from "../main.js";
 import setupPresets from "../companion/presetsList.js";
-import CompanionPreset, { CompanionPresetButton, CompanionPresetText } from "./presetTemplate.js";
-import { CompanionPresetAction } from "./presetContainers.js";
+import CompPreset, { CompPresetButton, CompPresetText } from "./presetTemplate.js";
+import { CompPresetAction } from "./presetContainers.js";
 
-class CompanionPresetManager {
-    private presets: CompanionPreset[] = [];
+class CompPresetManager {
+    private presets: CompPreset[] = [];
     private companionPresets: CompanionPresetDefinitions = {};
 
-    public addPreset(preset: CompanionPreset): CompanionPresetManager {
+    public addPreset(preset: CompPreset): CompPresetManager {
         this.presets.push(preset);
         if (preset.Type == "button") {
-            const Preset: CompanionPresetButton = preset as CompanionPresetButton;
+            const Preset: CompPresetButton = preset as CompPresetButton;
             this.companionPresets[Preset.Id] = {
                 category: Preset.Category,
                 feedbacks: Preset.FeedBacks.map((feedback) => {
@@ -25,7 +25,7 @@ class CompanionPresetManager {
                 }),
                 name: Preset.Name,
                 steps: Preset.Steps.map((step) => {
-                    const transf = (action: CompanionPresetAction) => {
+                    const transf = (action: CompPresetAction) => {
                         return {
                             actionId: action.Action.Id,
                             options: action.Options,
@@ -46,7 +46,7 @@ class CompanionPresetManager {
                 previewStyle: Preset.PreviewStyle
             };
         } else {
-            const Preset: CompanionPresetText = preset as CompanionPresetText;
+            const Preset: CompPresetText = preset as CompPresetText;
             this.companionPresets[Preset.Id] = {
                 category: Preset.Category,
                 name: Preset.Name,
@@ -57,7 +57,7 @@ class CompanionPresetManager {
         return this;
     }
 
-    public init(): CompanionPresetManager {
+    public init(): CompPresetManager {
         this.presets = [];
         this.companionPresets = {};
         setupPresets();
@@ -115,5 +115,5 @@ class CompanionPresetManager {
     }
 }
 
-const PresetManager = new CompanionPresetManager();
+const PresetManager = new CompPresetManager();
 export default PresetManager;
