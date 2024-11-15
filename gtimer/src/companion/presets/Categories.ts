@@ -1,5 +1,6 @@
 enum CompPresetCategories {
-    Dates = 'Dates',
+    Dates = 'Dates & Times',
+    Chronos = 'Chronos',
 }
 
 export default CompPresetCategories;

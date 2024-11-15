@@ -1,26 +1,27 @@
 import { CompanionButtonPresetOptions, CompanionButtonStyleProps } from "@companion-module/base";
-import { CompPresetButton } from "../../../managers/presetTemplate.js";
-import CompPresetCategories from "../Categories.js";
+import { CompPresetButton } from "../../../../managers/presetTemplate.js";
+import CompPresetCategories from "../../Categories.js";
 
-class FullDates extends CompPresetButton {
-    id = 'testBId';
+class Separator extends CompPresetButton {
+    id = 'separator';
     category = CompPresetCategories.Dates;
-    name = 'Test Preset';
+    name = 'Separator';
 
     options = {
     } as CompanionButtonPresetOptions
     style = {
         color: 0xffffff,
         bgcolor: 0,
-        text: '$(?:Date_WeekDay) $(?:Date_Day)\n$(?:Date_MonthName)\n$(?:Date_Year)'
+        text: '$(?:Info_ClintPoints)'
     } as CompanionButtonStyleProps
     previewStyle = {
         color: 0xffffff,
         bgcolor: 0,
-        text: 'Full Date'
+        text: 'Separator',
+        size: 15
     } as CompanionButtonStyleProps
     feedBacks = [];
     steps = [];
 }
 
-export default FullDates;
+export default Separator;
