@@ -52,7 +52,8 @@ class Pause extends CompPresetButton {
     previewStyle = {
         color: 0xffffff,
         bgcolor: 0,
-        text: 'Pause'
+        text: 'Pause',
+        size: 23
     } as CompanionButtonStyleProps
     feedBacks = [
         new PauseFeedback1()
