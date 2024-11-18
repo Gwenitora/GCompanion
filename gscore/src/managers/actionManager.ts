@@ -1,16 +1,16 @@
 import { CompanionActionDefinitions } from "@companion-module/base";
-import CompanionAction from "./actionTemplate.js";
+import CompAction from "./actionTemplate.js";
 import { ModuleInstance } from "../main.js";
 import setupActions from "../companion/actionList.js";
 
-class CompanionActionManager {
-    private actions: CompanionAction[] = [];
+class CompActionManager {
+    private actions: CompAction[] = [];
     private companionActions: CompanionActionDefinitions = {};
 
     constructor() {
     }
 
-    public addAction(action: CompanionAction): CompanionActionManager {
+    public addAction(action: CompAction): CompActionManager {
         this.actions.push(action);
         this.companionActions[action.Id] = {
             name: action.Name,
@@ -26,7 +26,7 @@ class CompanionActionManager {
         return this;
     }
 
-    public init(): CompanionActionManager {
+    public init(): CompActionManager {
         this.actions = [];
         this.companionActions = {};
         setupActions();
@@ -41,5 +41,5 @@ class CompanionActionManager {
     }
 }
 
-const ActionManager = new CompanionActionManager();
+const ActionManager = new CompActionManager();
 export default ActionManager;

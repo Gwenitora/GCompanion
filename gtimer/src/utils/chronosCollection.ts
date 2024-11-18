@@ -151,6 +151,10 @@ export class Chrono {
             }
         }, 50)
     }
+
+    public ResetPauseDecal(): void {
+        this.pausedDecal = 0;
+    }
 }
 
 class ChronosCollection {

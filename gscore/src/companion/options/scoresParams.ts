@@ -1,6 +1,6 @@
-import CompanionOptionType from "../../managers/optionTypes.js";
+import CompOptionType from "../../managers/optionTypes.js";
 
-const scoresParams: CompanionOptionType = {
+const scoresParams: CompOptionType = {
     action: [
         {
             id: 'transiTime',

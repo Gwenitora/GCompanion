@@ -11,7 +11,7 @@ export type feedbackSubscribe = (event: CompanionFeedbackInfo, context: Companio
 export type feedbackUnsubscribe = (event: CompanionFeedbackInfo, context: CompanionFeedbackContext) => void | Promise<void>;
 export type feedbackLearn = (event: CompanionFeedbackInfo, context: CompanionFeedbackContext) => CompanionOptionValues | undefined | Promise<CompanionOptionValues | undefined>;
 
-abstract class CompanionFeedback<T extends feedbackType> {
+abstract class CompFeedback<T extends feedbackType> {
     protected self: ModuleInstance;
 
     protected abstract id: string;
@@ -50,4 +50,4 @@ abstract class CompanionFeedback<T extends feedbackType> {
     public get Learn(): feedbackLearn | undefined { return this.learn; }
 }
 
-export default CompanionFeedback;
+export default CompFeedback;

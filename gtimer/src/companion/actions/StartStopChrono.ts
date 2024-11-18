@@ -1,12 +1,12 @@
 import { CompanionActionEvent, CompanionActionInfo, SomeCompanionActionInputField } from "@companion-module/base";
-import CompanionAction, { actionCallback, actionSubscribe, actionUnsubscribe } from "../../managers/actionTemplate.js";
+import CompAction, { actionCallback, actionSubscribe, actionUnsubscribe } from "../../managers/actionTemplate.js";
 import ChronosColl, { Chrono } from "../../utils/chronosCollection.js";
 import { evaluateExpression, mod } from "../../utils/utils.js";
 import dataLink from "../../utils/dataLink.js";
 import chronoName from "../options/chronoName.js";
 import chronoSetup from "../options/chronosSetup.js";
 
-class startStopChrono extends CompanionAction {
+class startStopChrono extends CompAction {
     protected id: string = 'startStopChrono';
     protected name: string = 'Start/Stop Chrono';
     protected description?: string = 'Start a new Chrono or stop it the existing';
