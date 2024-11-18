@@ -1,4 +1,7 @@
 import PresetManager from "../managers/presetManager.js";
+import Pause from "./presets/button/Chronos/pause.js";
+import ResetPause from "./presets/button/Chronos/resetPause.js";
+import StartAndStop from "./presets/button/Chronos/startStop.js";
 import Day from "./presets/button/DateAndTime/day.js";
 import FullDate from "./presets/button/DateAndTime/fullDate.js";
 import Hour from "./presets/button/DateAndTime/hour.js";
@@ -27,7 +30,10 @@ const setupPresets = () => {
         .addPreset(new Separator())
         .addPreset(new Hour())
         .addPreset(new Minute())
-        .addPreset(new Second());
+        .addPreset(new Second())
+        .addPreset(new StartAndStop())
+        .addPreset(new Pause())
+        .addPreset(new ResetPause())
 }
 
 export default setupPresets;
