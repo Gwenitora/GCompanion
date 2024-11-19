@@ -10,7 +10,7 @@ import isStart from "../../../feedbacks/IsStart.js";
 import isPause from "../../../feedbacks/IsPause.js";
 
 // ================================================== Feedbacks ================================================== //
-class StartAndStopFeedback1 extends CompPresetFeedback {
+export class StartAndStopFeedback1 extends CompPresetFeedback {
     protected feedBack = new isStart();
     protected options: CompanionOptionValues = transformOptToPresetOpt(chronoName);
     protected style = this.feedBack.DefaultStyle;
@@ -23,7 +23,7 @@ class StartAndStopFeedback1 extends CompPresetFeedback {
     }
 }
 
-class StartAndStopFeedback2 extends CompPresetFeedback {
+export class StartAndStopFeedback2 extends CompPresetFeedback {
     protected feedBack = new isPause();
     protected options: CompanionOptionValues = transformOptToPresetOpt(chronoName);
     protected style = this.feedBack.DefaultStyle;
@@ -32,7 +32,7 @@ class StartAndStopFeedback2 extends CompPresetFeedback {
 }
 
 // ================================================== Steps and Actions ================================================== //
-class StartAndStopAction1_1 extends CompPresetAction {
+export class StartAndStopAction1_1 extends CompPresetAction {
     protected action = new startStopChrono();
     protected options: CompanionOptionValues = transformOptToPresetOpt(chronoName, chronoSetup);
     protected description?: string;
