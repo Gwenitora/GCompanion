@@ -44,9 +44,24 @@ class startStopChrono extends CompAction {
     private async updateDatasChrono(ch: Chrono, event: CompanionActionEvent | CompanionActionInfo) {
         ch.CountDown = event.options.countdown as boolean;
         ch.ResetOnEnd = event.options.reset as boolean;
-        var hou = evaluateExpression(await this.self.parseVariablesInString(event.options.hou as string));
-        var min = evaluateExpression(await this.self.parseVariablesInString(event.options.min as string));
-        var sec = evaluateExpression(await this.self.parseVariablesInString(event.options.sec as string));
+        var hou;
+        var min;
+        var sec;
+        try {
+            hou = evaluateExpression(await this.self.parseVariablesInString(event.options.hou as string));
+        } catch (err) {
+            hou = 0;
+        }
+        try {
+            min = evaluateExpression(await this.self.parseVariablesInString(event.options.min as string));
+        } catch (err) {
+            min = 0;
+        }
+        try {
+            sec = evaluateExpression(await this.self.parseVariablesInString(event.options.sec as string));
+        } catch (err) {
+            sec = 0;
+        }
         hou = hou ? hou : 0;
         min = min ? min : 0;
         sec = sec ? sec : 0;
