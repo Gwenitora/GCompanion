@@ -1,4 +1,7 @@
 import PresetManager from "../managers/presetManager.js";
+import NextHalfHour_StartAndStop from "./presets/button/Chronos/nextHalfHour.js";
+import NextHour_StartAndStop from "./presets/button/Chronos/nextHour.js";
+import NextMidHour_StartAndStop from "./presets/button/Chronos/nextMidHour.js";
 import Pause from "./presets/button/Chronos/pause.js";
 import ResetPause from "./presets/button/Chronos/resetPause.js";
 import StartAndStop from "./presets/button/Chronos/startStop.js";
@@ -14,6 +17,7 @@ import Timestamp from "./presets/button/DateAndTime/timestamp.js";
 import Weekday from "./presets/button/DateAndTime/weekDay.js";
 import Year from "./presets/button/DateAndTime/year.js";
 import DateSeparator from "./presets/text/dates.js";
+import SpecialsChronos from "./presets/text/specialChronos.js";
 import TimeSeparator from "./presets/text/time.js";
 
 const setupPresets = () => {
@@ -34,6 +38,10 @@ const setupPresets = () => {
         .addPreset(new StartAndStop())
         .addPreset(new Pause())
         .addPreset(new ResetPause())
+        .addPreset(new SpecialsChronos())
+        .addPreset(new NextHour_StartAndStop())
+        .addPreset(new NextHalfHour_StartAndStop())
+        .addPreset(new NextMidHour_StartAndStop());
 }
 
 export default setupPresets;

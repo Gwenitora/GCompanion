@@ -66,7 +66,7 @@ class CompPresetManager {
 
     public UpdatePresets(self: ModuleInstance): void {
         for (const i in this.companionPresets) {
-            const r: [string, string] = ["$(?:", `$(${self.id}:`];
+            const r: [string, string] = ["$(?:", `$(${self.label}:`];
 
             if (!this.companionPresets[i]) continue;
             this.companionPresets[i].name = this.companionPresets[i].name.replaceAll(...r);
@@ -86,20 +86,44 @@ class CompPresetManager {
                 step.name = step.name?.replaceAll(...r);
 
                 step.down.forEach(action => {
-                    if (!action.headline) return;
-                    action.headline = action.headline?.replaceAll(...r);
+                    if (action.headline) {
+                        action.headline = action.headline?.replaceAll(...r);
+                    }
+                    if (!action.options) return;
+                    for (const j in action.options) {
+                        if (typeof action.options[j] !== "string") continue;
+                        action.options[j] = action.options[j]?.replaceAll(...r);
+                    }
                 });
                 step.up.forEach(action => {
-                    if (!action.headline) return;
-                    action.headline = action.headline?.replaceAll(...r);
+                    if (action.headline) {
+                        action.headline = action.headline?.replaceAll(...r);
+                    }
+                    if (!action.options) return;
+                    for (const j in action.options) {
+                        if (typeof action.options[j] !== "string") continue;
+                        action.options[j] = action.options[j]?.replaceAll(...r);
+                    }
                 });
                 step.rotate_left?.forEach(action => {
-                    if (!action.headline) return;
-                    action.headline = action.headline?.replaceAll(...r);
+                    if (action.headline) {
+                        action.headline = action.headline?.replaceAll(...r);
+                    }
+                    if (!action.options) return;
+                    for (const j in action.options) {
+                        if (typeof action.options[j] !== "string") continue;
+                        action.options[j] = action.options[j]?.replaceAll(...r);
+                    }
                 });
                 step.rotate_right?.forEach(action => {
-                    if (!action.headline) return;
-                    action.headline = action.headline?.replaceAll(...r);
+                    if (action.headline) {
+                        action.headline = action.headline?.replaceAll(...r);
+                    }
+                    if (!action.options) return;
+                    for (const j in action.options) {
+                        if (typeof action.options[j] !== "string") continue;
+                        action.options[j] = action.options[j]?.replaceAll(...r);
+                    }
                 });
             });
 
