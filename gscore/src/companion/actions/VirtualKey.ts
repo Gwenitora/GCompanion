@@ -13,7 +13,10 @@ class virtualKey extends CompAction {
     protected callback: actionCallback = (event) => {
         KeyEvent({
             name: event.options.key,
-        } as any, {}, true)
+        } as any, {
+            'LEFT SHIFT': true,
+            'RIGHT SHIFT': true
+        }, true)
     }
     
     protected subscribe?: undefined;

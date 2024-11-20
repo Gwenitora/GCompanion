@@ -7,3 +7,5 @@ DEBUG-*
 .yarn/
 .vscode/*
 *.code-workspace
+*.[Tt][Mm][Pp]*
+*.[Tt][Ee][Mm][Pp]emp*
