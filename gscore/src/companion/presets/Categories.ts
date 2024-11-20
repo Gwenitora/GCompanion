@@ -1,5 +1,6 @@
 enum CompPresetCategories {
-    Dates = 'Dates',
+    Scores = 'Scores',
+    Keys = 'Virtuals Keys'
 }
 
 export default CompPresetCategories;
