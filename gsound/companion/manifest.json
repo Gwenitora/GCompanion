@@ -1,12 +1,12 @@
 {
-	"id": "gscore",
-	"name": "GScore",
-	"shortname": "gscore",
-	"description": "To control variable and animate them.",
+	"id": "gsound",
+	"name": "GSound",
+	"shortname": "gsound",
+	"description": "To play sound on your pc.",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/gwenitora/gscore.git",
-	"bugs": "https://github.com/gwenitora/gscore/issues",
+	"repository": "git+https://github.com/gwenitora/gsound.git",
+	"bugs": "https://github.com/gwenitora/gsound/issues",
 	"maintainers": [
 		{
 			"name": "Gwenitora",
@@ -21,6 +21,6 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Gwenitora",
-	"products": ["Score"],
+	"products": ["Sound"],
 	"keywords": []
 }
