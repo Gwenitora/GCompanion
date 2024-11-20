@@ -20,6 +20,8 @@ import VirtualKey_LeftParenthese from "./presets/button/keys/parentheseLeft.js";
 import VirtualKey_RightParenthese from "./presets/button/keys/parentheseRight.js";
 import VirtualKey_Plus from "./presets/button/keys/plus.js";
 import Preview from "./presets/button/preview.js";
+import SetScorePreset from "./presets/button/score/setScore.js";
+import SetScorePresetInstant from "./presets/button/score/setScoreInstant.js";
 import VirtualMaths from "./presets/text/maths.js";
 import VirtualNumbers from "./presets/text/numbers.js";
 import VirtualOthers from "./presets/text/other.js";
@@ -28,7 +30,7 @@ const setupPresets = () => {
     PresetManager
         .addPreset(new BoardPreview())
         .addPreset(new Preview())
-        
+
         .addPreset(new VirtualNumbers())
         .addPreset(new VirtualKey_Zero())
         .addPreset(new VirtualKey_One())
@@ -57,7 +59,9 @@ const setupPresets = () => {
         // ==================== //
 
         .addPreset(new BoardPreview().toScore())
-        .addPreset(new Preview().toScore());
+        .addPreset(new Preview().toScore())
+        .addPreset(new SetScorePreset())
+        .addPreset(new SetScorePresetInstant())
 }
 
 export default setupPresets;
