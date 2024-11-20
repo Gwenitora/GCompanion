@@ -22,6 +22,7 @@ import TimeSeparator from "./presets/text/time.js";
 
 const setupPresets = () => {
     PresetManager
+    
         .addPreset(new Timestamp())
         .addPreset(new DateSeparator())
         .addPreset(new FullDate())
@@ -35,6 +36,7 @@ const setupPresets = () => {
         .addPreset(new Hour())
         .addPreset(new Minute())
         .addPreset(new Second())
+
         .addPreset(new StartAndStop())
         .addPreset(new Pause())
         .addPreset(new ResetPause())
