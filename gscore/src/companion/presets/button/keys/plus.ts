@@ -7,7 +7,7 @@ import { transformOptToPresetOpt } from "../../../../utils/companionUtils.js";
 import keysClickable from "../../../options/keysClickable.js";
 
 // ================================================== Steps and Actions ================================================== //
-class VirtualKey_ThreeAction1_1 extends CompPresetAction {
+class VirtualKey_PlusAction1_1 extends CompPresetAction {
     protected action = new virtualKey();
     protected options: CompanionOptionValues = transformOptToPresetOpt(keysClickable);
     protected description?: string;
@@ -15,14 +15,14 @@ class VirtualKey_ThreeAction1_1 extends CompPresetAction {
 
     constructor() {
         super();
-        this.options.key = '3';
+        this.options.key = 'NUMPAD PLUS';
     }
 }
 
-class VirtualKey_ThreeStep1 extends CompPresetStep {
-    name = 'Add \'3\' to preview';
+class VirtualKey_PlusStep1 extends CompPresetStep {
+    name = 'Add \'+\' to preview';
     onClick = [
-        new VirtualKey_ThreeAction1_1()
+        new VirtualKey_PlusAction1_1()
     ];
     onRelease = [];
     onRotateLeft = [];
@@ -30,27 +30,27 @@ class VirtualKey_ThreeStep1 extends CompPresetStep {
 }
 
 // ================================================== Preset ================================================== //
-class VirtualKey_Three extends CompPresetButton {
-    id = 'virtualThree';
+class VirtualKey_Plus extends CompPresetButton {
+    id = 'virtualPlus';
     category = CompPresetCategories.Keys;
-    name = '3';
+    name = '+';
 
     options = {
     } as CompanionButtonPresetOptions
     style = {
         color: 0xffffff,
         bgcolor: 0,
-        text: '3'
+        text: '+'
     } as CompanionButtonStyleProps
     previewStyle = {
         color: 0xffffff,
         bgcolor: 0,
-        text: '3'
+        text: '+'
     } as CompanionButtonStyleProps
     feedBacks = [];
     steps = [
-        new VirtualKey_ThreeStep1()
+        new VirtualKey_PlusStep1()
     ];
 }
 
-export default VirtualKey_Three;
+export default VirtualKey_Plus;

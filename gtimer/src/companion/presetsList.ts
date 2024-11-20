@@ -24,12 +24,14 @@ const setupPresets = () => {
     PresetManager
     
         .addPreset(new Timestamp())
+
         .addPreset(new DateSeparator())
         .addPreset(new FullDate())
         .addPreset(new Weekday())
         .addPreset(new Day())
         .addPreset(new MonthName())
         .addPreset(new Year())
+
         .addPreset(new TimeSeparator())
         .addPreset(new Time())
         .addPreset(new Separator())
@@ -37,9 +39,12 @@ const setupPresets = () => {
         .addPreset(new Minute())
         .addPreset(new Second())
 
+        // ==================== //
+
         .addPreset(new StartAndStop())
         .addPreset(new Pause())
         .addPreset(new ResetPause())
+
         .addPreset(new SpecialsChronos())
         .addPreset(new NextHour_StartAndStop())
         .addPreset(new NextHalfHour_StartAndStop())

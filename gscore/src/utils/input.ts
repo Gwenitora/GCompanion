@@ -5,7 +5,7 @@ import { evaluateExpression, parseBool } from "./utils.js";
 const keyManager = new GlobalKeyboardListener();
 
 export const KeyEvent = (e: IGlobalKeyEvent, globalKeyMap: IGlobalKeyDownMap, force: boolean = false) => {
-    if (e.state !== 'UP' && (parseBool(VariablesCtrl.get(VarDef.GetKeyOn)) || force)) {
+    if (force || (e.state !== 'UP' && parseBool(VariablesCtrl.get(VarDef.GetKeyOn)))) {
         var preview = VariablesCtrl.get(VarDef.Preview);
         preview = preview ? preview : '';
 

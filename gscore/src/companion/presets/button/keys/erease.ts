@@ -7,7 +7,7 @@ import { transformOptToPresetOpt } from "../../../../utils/companionUtils.js";
 import keysClickable from "../../../options/keysClickable.js";
 
 // ================================================== Steps and Actions ================================================== //
-class VirtualKey_ThreeAction1_1 extends CompPresetAction {
+class VirtualKey_EreaseAction1_1 extends CompPresetAction {
     protected action = new virtualKey();
     protected options: CompanionOptionValues = transformOptToPresetOpt(keysClickable);
     protected description?: string;
@@ -15,14 +15,14 @@ class VirtualKey_ThreeAction1_1 extends CompPresetAction {
 
     constructor() {
         super();
-        this.options.key = '3';
+        this.options.key = 'BACKSPACE';
     }
 }
 
-class VirtualKey_ThreeStep1 extends CompPresetStep {
-    name = 'Add \'3\' to preview';
+class VirtualKey_EreaseStep1 extends CompPresetStep {
+    name = 'Remove last character to preview';
     onClick = [
-        new VirtualKey_ThreeAction1_1()
+        new VirtualKey_EreaseAction1_1()
     ];
     onRelease = [];
     onRotateLeft = [];
@@ -30,27 +30,29 @@ class VirtualKey_ThreeStep1 extends CompPresetStep {
 }
 
 // ================================================== Preset ================================================== //
-class VirtualKey_Three extends CompPresetButton {
-    id = 'virtualThree';
+class VirtualKey_Erease extends CompPresetButton {
+    id = 'virtualErease';
     category = CompPresetCategories.Keys;
-    name = '3';
+    name = 'erease';
 
     options = {
     } as CompanionButtonPresetOptions
     style = {
         color: 0xffffff,
         bgcolor: 0,
-        text: '3'
+        text: 'erease',
+        size: 22
     } as CompanionButtonStyleProps
     previewStyle = {
         color: 0xffffff,
         bgcolor: 0,
-        text: '3'
+        text: 'erease',
+        size: 22
     } as CompanionButtonStyleProps
     feedBacks = [];
     steps = [
-        new VirtualKey_ThreeStep1()
+        new VirtualKey_EreaseStep1()
     ];
 }
 
-export default VirtualKey_Three;
+export default VirtualKey_Erease;

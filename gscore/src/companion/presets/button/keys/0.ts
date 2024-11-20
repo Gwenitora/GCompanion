@@ -20,7 +20,7 @@ class VirtualKey_ZeroAction1_1 extends CompPresetAction {
 }
 
 class VirtualKey_ZeroStep1 extends CompPresetStep {
-    name = 'Add 0 to preview';
+    name = 'Add \'0\' to preview';
     onClick = [
         new VirtualKey_ZeroAction1_1()
     ];

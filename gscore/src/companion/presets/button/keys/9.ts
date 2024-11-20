@@ -20,7 +20,7 @@ class VirtualKey_NineAction1_1 extends CompPresetAction {
 }
 
 class VirtualKey_NineStep1 extends CompPresetStep {
-    name = 'Add 9 to preview';
+    name = 'Add \'9\' to preview';
     onClick = [
         new VirtualKey_NineAction1_1()
     ];

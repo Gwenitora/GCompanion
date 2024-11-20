@@ -20,7 +20,7 @@ class VirtualKey_FiveAction1_1 extends CompPresetAction {
 }
 
 class VirtualKey_FiveStep1 extends CompPresetStep {
-    name = 'Add 5 to preview';
+    name = 'Add \'5\' to preview';
     onClick = [
         new VirtualKey_FiveAction1_1()
     ];
