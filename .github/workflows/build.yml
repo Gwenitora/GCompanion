@@ -22,6 +22,14 @@ jobs:
           for dir in $(ls -d */); do
             echo "."
             echo "."
+
+            if [[ $(basename "$dir") == _* ]]; then
+              echo "Skipping $dir..."
+              echo "."
+              echo "."
+              continue
+            fi
+
             echo "Processing $dir..."
             echo "."
             echo "."
