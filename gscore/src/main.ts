@@ -5,6 +5,7 @@ import { UpgradeScripts } from './upgrades.js'
 import ActionManager from './managers/actionManager.js'
 import FeedbackManager from './managers/feedbackManager.js'
 import PresetManager from './managers/presetManager.js'
+import initInputs from './utils/input.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig // Setup in init()
@@ -23,6 +24,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		this.updateFeedbacks() // export feedbacks
 		this.updatePresets() // export presets
 		this.updateVariableDefinitions() // export variable definitions
+		initInputs()
 	}
 	// When module gets deleted
 	async destroy(): Promise<void> {
