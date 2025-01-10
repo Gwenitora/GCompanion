@@ -1,4 +1,4 @@
-import { InstanceBase, runEntrypoint, InstanceStatus, SomeCompanionConfigField } from '@companion-module/base'
+import { InstanceBase, runEntrypoint, InstanceStatus } from '@companion-module/base'
 import { GetConfigFields, type ModuleConfig } from './config.js'
 import VariablesCtrl from './utils/variables.js'
 import { UpgradeScripts } from './upgrades.js'
@@ -34,8 +34,8 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	}
 
 	// Return config fields for web config
-	getConfigFields(): SomeCompanionConfigField[] {
-		return GetConfigFields()
+	getConfigFields() {
+		return GetConfigFields(this)
 	}
 
 	updateActions(): void {

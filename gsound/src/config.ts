@@ -1,6 +1,56 @@
 import { type SomeCompanionConfigField } from '@companion-module/base'
-export interface ModuleConfig {}
+import { ModuleInstance } from './main.js';
+import AudioManager from './utils/audio.js';
 
-export function GetConfigFields(): SomeCompanionConfigField[] {
-	return []
+
+export interface ModuleConfig {
+	VirtualInOutPutLength: number;
+	[key: `Virtual${'In' | 'Out'}put${number}`]: string;
+}
+
+export function GetConfigFields(self: ModuleInstance): SomeCompanionConfigField[] {
+	var out: SomeCompanionConfigField[] = [{
+		type: 'number',
+		label: 'Virtual Input/Output Length',
+		id: 'VirtualInOutPutLength',
+		default: 1,
+		range: false,
+		required: true,
+		width: 4,
+		min: 0,
+	} as SomeCompanionConfigField];
+
+	const inDevices = AudioManager.devices.filter((device) => device.maxInputChannels > 0);
+	const outDevices = AudioManager.devices.filter((device) => device.maxOutputChannels > 0);
+	
+	for (let i = 0; i < self.config.VirtualInOutPutLength; i++) {
+		out.push({
+			type: 'static-text',
+			id: `VirtualInOutPut${i}Text`,
+			label: `Virtual Input/Output ${i + 1}`,
+			width: 12,
+			value: `Virtual Input/Output ${i + 1}`
+		});
+
+		out.push({
+			type: 'multidropdown' ,
+			label: `Input`,
+			id: `VirtualInput${i}`,
+			default: [],
+			width: 6,
+			choices: inDevices.map((device) => ({ id: device.id, label: device.name }))
+		});
+
+		out.push({
+			type: 'multidropdown',
+			label: `Output`,
+			id: `VirtualOutput${i}`,
+			default: [0],
+			width: 6,
+			choices: outDevices.map((device) => ({ id: device.id, label: device.name })),
+			minSelection: 1
+		});
+	}
+
+	return out;
 }
