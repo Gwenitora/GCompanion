@@ -27,6 +27,7 @@ jobs:
               echo "Skipping $dir..."
               echo "."
               echo "."
+              rm -rf "$dir"
               continue
             fi
 
