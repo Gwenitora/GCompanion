@@ -16,33 +16,30 @@ const TimeScaleEdition: CompOptionType = {
         },
         {
             id: 'value0',
-            type: 'number',
+            type: 'textinput',
             label: 'Value',
-            default: 1,
-            min: 0,
-            max: 1000000,
+            default: '1',
             tooltip: 'The value to set',
-            isVisible: (options) => options.type === 1
+            isVisible: (options) => options.type === 1,
+            useVariables: true
         },
         {
             id: 'value1',
-            type: 'number',
+            type: 'textinput',
             label: 'First value',
-            default: 0,
-            min: 0,
-            max: 1000000,
+            default: '0',
             tooltip: 'The first value to toggle (have the priority if time scale is not the first value or the second)',
-            isVisible: (options) => options.type === 2
+            isVisible: (options) => options.type === 2,
+            useVariables: true
         },
         {
             id: 'value2',
-            type: 'number',
+            type: 'textinput',
             label: 'Second value',
-            default: 1,
-            min: 0,
-            max: 1000000,
+            default: '1',
             tooltip: 'The second value to toggle',
-            isVisible: (options) => options.type === 2
+            isVisible: (options) => options.type === 2,
+            useVariables: true
         }
     ],
     feedback: []
