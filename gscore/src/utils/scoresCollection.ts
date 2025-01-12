@@ -1,6 +1,6 @@
 import { Easing } from './easing.js';
 import { evaluateExpression, lerp } from './utils.js';
-import VariablesCtrl from './variables.js'
+import VariablesCtrl, { VarDef } from './variables.js'
 
 class Score {
     private name: string;
@@ -30,7 +30,8 @@ class Score {
         this.digits = 0;
         this.easing = {algo: 'linear', type: 'ease-in'};
 
-        VariablesCtrl.set(this.name, "");
+        this.setVariable(0, this.name);
+        this.setVariable(0, this.name + '-target');
     }
 
     public setScore(value: number | string): void {
@@ -47,28 +48,29 @@ class Score {
 
     public Update(): void {
         const NOW = Date.now();
-        const dtime = NOW - this.startTimestamp;
+        const dtime = (NOW - this.startTimestamp) * ScoreColl.TimeScale;
         if (dtime < this.transiLenght) {
             this.score = lerp(this.score, this.target, this.transiLenght === 0 ? 0 : Easing.getEasing(this.easing.algo, this.easing.type)(dtime / this.transiLenght));
         } else {
             this.score = this.target;
         }
-        this.setVariable();
+        this.setVariable(this.score, this.name);
+        this.setVariable(this.target, this.name + '-target');
     }
 
-    private setVariable(): void {
+    private setVariable(variable: number, name: string): void {
         var reg = this.regex.split('');
         for (let i = 0; i < reg.length; i++) {
             if (reg[i] === '#') {
-                reg[i] = this.score.toFixed(this.digits);
+                reg[i] = variable.toFixed(this.digits);
                 continue;
             }
             if (reg[i] === '\\') {
                 reg[i] = '';
                 i++;
             }
-        }        
-        VariablesCtrl.set(this.name, reg.join(''));
+        }
+        VariablesCtrl.set(name, reg.join(''));
     }
 
     public addInstance(instance: string): void {
@@ -86,12 +88,35 @@ class Score {
             }
         }, 50)
     }
+
+    public resetStartTimestamp(lastScale: number, futurScale: number): void {
+        if (futurScale === 0) {
+            this.startTimestamp = 0;
+        } else if (lastScale === 0) {
+            this.startTimestamp = Date.now();
+        } else {
+            this.startTimestamp = Date.now() - ((Date.now() - this.startTimestamp) * lastScale / futurScale);
+        }
+    }
 }
 
 class ScroresCollection {
     private scores: { [key: string]: Score };
+    private timeScale: number;
+
+    get TimeScale(): number {
+        return this.timeScale;
+    }
+    set TimeScale(value: number) {
+        for (const key in this.scores) {
+            this.scores[key].resetStartTimestamp(this.timeScale, value);
+        }
+        this.timeScale = value;
+        VariablesCtrl.set(VarDef.TimeScale, this.timeScale.toString());
+    }
 
     constructor() {
+        this.timeScale = 1;
         this.scores = {};
         this.Init();
     }
@@ -125,6 +150,7 @@ class ScroresCollection {
     public Delete(key: string): void {
         if (this.scores[key] === undefined) return;
         VariablesCtrl.del(`Score-${key}`);
+        VariablesCtrl.del(`Score-${key}-target`);
         delete this.scores[key];
     }
 
