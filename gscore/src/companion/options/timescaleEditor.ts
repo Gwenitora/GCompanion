@@ -20,7 +20,7 @@ const TimeScaleEdition: CompOptionType = {
             label: 'Value',
             default: 1,
             min: 0,
-            max: Infinity,
+            max: 1000000,
             tooltip: 'The value to set',
             isVisible: (options) => options.type === 1
         },
@@ -30,7 +30,7 @@ const TimeScaleEdition: CompOptionType = {
             label: 'First value',
             default: 0,
             min: 0,
-            max: Infinity,
+            max: 1000000,
             tooltip: 'The first value to toggle (have the priority if time scale is not the first value or the second)',
             isVisible: (options) => options.type === 2
         },
@@ -40,7 +40,7 @@ const TimeScaleEdition: CompOptionType = {
             label: 'Second value',
             default: 1,
             min: 0,
-            max: Infinity,
+            max: 1000000,
             tooltip: 'The second value to toggle',
             isVisible: (options) => options.type === 2
         }
