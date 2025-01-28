@@ -20,6 +20,10 @@ jobs:
       - name: Install dependencies and build each directory
         run: |
           git submodule update
+
+          ls -l
+          ls -l ./gtimer
+
           for dir in $(ls -d */); do
             echo "."
             echo "."
@@ -34,9 +38,7 @@ jobs:
             echo "."
             echo "."
             cd "$dir"
-            ls -l
             npm install
-            ls -l
             npm run pack
             mv pkg "../${dir%/}.GCompanion"
             cd ..
