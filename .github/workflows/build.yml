@@ -21,8 +21,8 @@ jobs:
         run: |
           git submodule update
 
-          ls -l
-          ls -l ./gtimer
+          ls -la
+          ls -la ./gtimer
 
           for dir in $(ls -d */); do
             echo "."
