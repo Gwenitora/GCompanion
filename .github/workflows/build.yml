@@ -34,7 +34,9 @@ jobs:
             echo "."
             echo "."
             cd "$dir"
+            ls -l
             npm install
+            ls -l
             npm run pack
             mv pkg "../${dir%/}.GCompanion"
             cd ..
