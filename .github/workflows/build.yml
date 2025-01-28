@@ -33,7 +33,6 @@ jobs:
             echo "."
             echo "."
             cd "$dir"
-            git pull
             npm install
             npm run pack
             mv pkg "../${dir%/}.GCompanion"
