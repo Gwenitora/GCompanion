@@ -19,6 +19,7 @@ jobs:
 
       - name: Install dependencies and build each directory
         run: |
+          git submodule update
           for dir in $(ls -d */); do
             echo "."
             echo "."
