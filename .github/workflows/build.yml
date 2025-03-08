@@ -46,9 +46,9 @@ jobs:
             npm i
             npm run pack
 
-            mv pkg "../${dir%/}.GCompanion"
+            mv pkg "../${dir%/}_.GCompanion"
             cd ..
-            rm -rf "$dir_"
+            rm -rf "$dir"
 
           done
 
