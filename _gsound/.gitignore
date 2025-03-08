@@ -9,3 +9,4 @@ DEBUG-*
 *.code-workspace
 *.[Tt][Mm][Pp]*
 *.[Tt][Ee][Mm][Pp]emp*
+.env
