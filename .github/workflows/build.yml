@@ -21,6 +21,12 @@ jobs:
         run: |
           git submodule init
           git submodule update
+          
+          cd .git
+          rm -rf modules
+          cd ..
+          rm -rf .gitmodules
+
           for dir in $(ls -d */); do
             echo "."
             echo "."
@@ -35,11 +41,15 @@ jobs:
             echo "."
             echo "."
             cd "$dir"
-            npm install
+            rm -rf .git
+
+            npm i
             npm run pack
-            mv pkg "../${dir%/}.GCompanion"
+
+            mv pkg "../${dir%/}_.GCompanion"
             cd ..
             rm -rf "$dir"
+
           done
 
       - name: Remove useless files and rename directories for better name
