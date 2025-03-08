@@ -48,8 +48,8 @@ jobs:
 
             mv pkg "../${dir%/}.GCompanion"
             cd ..
-            rm -rf "$dir"
-            
+            rm -rf "$dir_"
+
           done
 
       - name: Remove useless files and rename directories for better name
