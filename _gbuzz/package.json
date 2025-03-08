@@ -1,0 +1,47 @@
+{
+	"name": "your-module-name",
+	"version": "0.1.0",
+	"main": "dist/main.js",
+	"type": "module",
+	"scripts": {
+		"postinstall": "npx husky",
+		"format": "npx prettier -w .",
+		"pack": "yarn build && npx companion-module-build && cd pkg && sed -i 's/\\.\\.\\/\\.\\.\\/bin\\//\\.\\/companion\\/bin\\//g' main.js",
+		"build": "npx rimraf dist && yarn build:main",
+		"build:main": "npx tsc -p tsconfig.build.json",
+		"dev": "npx tsc -p tsconfig.build.json --watch",
+		"lint:raw": "npx eslint",
+		"lint": "yarn lint:raw ."
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/gwenitora/gtimer.git"
+	},
+	"dependencies": {
+		"@companion-module/base": "~1.11.0",
+		"yarn": "^1.22.22"
+	},
+	"devDependencies": {
+		"node-global-key-listener": "^0.3.0",
+		"@companion-module/tools": "^2.1.0",
+		"@types/node": "^22.6.1",
+		"eslint": "^9.11.1",
+		"husky": "^9.1.6",
+		"lint-staged": "^15.2.10",
+		"prettier": "^3.3.3",
+		"rimraf": "^6.0.1",
+		"typescript": "~5.5.4",
+		"typescript-eslint": "^8.7.0"
+	},
+	"prettier": "@companion-module/tools/.prettierrc.json",
+	"lint-staged": {
+		"*.{css,json,md,scss}": [
+			"prettier --write"
+		],
+		"*.{ts,tsx,js,jsx}": [
+			"yarn lint:raw --fix"
+		]
+	},
+	"packageManager": "yarn@1.22.22"
+}
