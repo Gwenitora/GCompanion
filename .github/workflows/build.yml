@@ -25,6 +25,7 @@ jobs:
           cd .git
           rm -rf modules
           cd ..
+          rm -rf .gitmodules
 
           for dir in $(ls -d */); do
             echo "."
@@ -40,11 +41,15 @@ jobs:
             echo "."
             echo "."
             cd "$dir"
+            rm -rf .git
+
             npm i
             npm run pack
+
             mv pkg "../${dir%/}.GCompanion"
             cd ..
             rm -rf "$dir"
+            
           done
 
       - name: Remove useless files and rename directories for better name
