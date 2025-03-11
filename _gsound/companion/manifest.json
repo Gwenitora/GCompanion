@@ -5,8 +5,8 @@
 	"description": "To play sound on your pc.",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/gwenitora/gsound.git",
-	"bugs": "https://github.com/gwenitora/gsound/issues",
+	"repository": "git+https://github.com/gwenitora/GSound.git",
+	"bugs": "https://github.com/gwenitora/GSound/issues",
 	"maintainers": [
 		{
 			"name": "Gwenitora",

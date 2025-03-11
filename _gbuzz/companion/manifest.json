@@ -1,12 +1,12 @@
 {
-	"id": "gtemplate",
-	"name": "GTemplate",
-	"shortname": "gtemplate",
-	"description": "Just a template for dev new plugin",
+	"id": "gbuzz",
+	"name": "GBuzz",
+	"shortname": "gbuzz",
+	"description": "To connect a ps2 buzzer to an API",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/gwenitora/gtemplate.git",
-	"bugs": "https://github.com/gwenitora/gtemplate/issues",
+	"repository": "git+https://github.com/gwenitora/GBuzz.git",
+	"bugs": "https://github.com/gwenitora/GBuzz/issues",
 	"maintainers": [
 		{
 			"name": "Gwenitora",
@@ -21,6 +21,6 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Gwenitora",
-	"products": ["Template"],
+	"products": ["ps2 buzzers"],
 	"keywords": []
 }

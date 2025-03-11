@@ -1,3 +1,6 @@
 [submodule "gtimer"]
 	path = gtimer
 	url = https://github.com/Gwenitora/GTimer.git
+[submodule "gscore"]
+	path = gscore
+	url = https://github.com/Gwenitora/GScore.git
