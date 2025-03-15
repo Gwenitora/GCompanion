@@ -55,10 +55,12 @@ export const GetConfigFields = (self: ModuleInstance): SomeCompanionConfigField[
 	return out;
 }
 
+var sep = -1;
 const GenerateSeperation = (): CompanionInputFieldStaticText & CompanionConfigField => {
+	sep++;
 	return {
 		type: 'static-text',
-		id: 'seperation_' + Math.floor(Math.random() + 1000000000000000000000000),
+		id: 'seperator_' + sep,
 		label: '',
 		width: 12,
 		value: '<hr />'
