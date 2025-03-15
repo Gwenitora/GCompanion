@@ -19,7 +19,7 @@
   - answers (2 to 4)
 - Pour buzzers web et physique:
   - ✅ Actif ou non
-  - tag
+  - ✅ tag
   - ✅ pour les physique, nom du groupe
   - ✅ nom du buzzer
   - ✅ nom de l'équipe concerner

@@ -9,6 +9,7 @@ export interface ModuleConfig {
 	[ key: `buzzerTeam_${string}_${string}`   ]: undefined | string;
 	[ key: `buzzerTags_${string}_${string}`   ]: undefined | string[];
 	[ key: `tag_${number}`                    ]: undefined | string;
+	       'tags'                              : undefined | string;
 }
 
 export const GetConfigFields = (self: ModuleInstance): SomeCompanionConfigField[] => {
@@ -119,6 +120,7 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 
 const GetConfigFieldsTags = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [];
+	var OUT: SomeCompanionConfigField[] = [];
 
 	out.push({
 		type: 'static-text',
@@ -127,26 +129,27 @@ const GetConfigFieldsTags = (self: ModuleInstance): SomeCompanionConfigField[] =
 		width: 12,
 		value: `<h2>Tags</h2>`
 	});
-	out.push({
-		type: 'static-text',
-		id: 'LabelTags',
-		label: 'To add more tags, fill empty, and save plugin, and new empty slot spawn',
-		width: 12,
-		value: ''
-	});
 
 	const tags = GetAllTags(self);
-	const l = (Math.ceil(tags.length / 6) + 1) * 6;
 
-	for (let i = 0; i < l; i++) {
-		out.push({
-			type: 'textinput',
-			id: 'tag_' + i,
+	let i;
+	for (i = 0; i < tags.length; i++) {
+		OUT.push({
+			type: 'static-text',
+			id: `tag_${i}`,
 			label: '',
-			width: 2,
-			default: ' '
+			width: 1,
+			value: `${self.config[`tag_${i}`]}`
 		})
 	}
+	out.push({
+		type: 'textinput',
+		id: 'tags',
+		label: 'To add tags, enter here, and separate all new by a comma',
+		width: 12,
+		default: ''
+	})
+	out.push(...OUT)
 
 	return out;
 }
@@ -154,11 +157,9 @@ const GetConfigFieldsTags = (self: ModuleInstance): SomeCompanionConfigField[] =
 const GetAllTags = (self: ModuleInstance): string[] => {
 	var list: string[] = [];
 
-	const tagsKeys = Object.keys(self.config).filter(e => /^tag_\d+$/.test(e))
+	const tagsKeys = Object.keys(self.config).filter(e => /^tag_\d+$/.test(e) || e === 'tags')
 	const tags = tagsKeys.map(e => parseInt(e.slice(4)));
-	for (let i = 0; i <= Math.max(...tags); i++) {
-		list.push(self.config[`tag_${i}`] ? self.config[`tag_${i}`] as string : '')
-	}
+	list.push(...(self.config[`tags`] ? self.config[`tags`] as string : '').replaceAll("  ", " ").replaceAll("__", "_").replaceAll(", ", ",").replaceAll(" ", "_").split(','));
 	list = list.map(e => e.trim().toUpperCase());
 	list = list.map((e, i) => i === list.indexOf(e) ? e : "");
 
@@ -167,12 +168,11 @@ const GetAllTags = (self: ModuleInstance): string[] => {
 			delete self.config[`tag_${i}`];
 		} catch (e) {}
 	}
-	console.log(list)
+
 	list = list.filter(e => e !== '');
-	for (let i = 0; i < list.length; i++) {
-		self.config[`tag_${i}`] = list[i];
-	}
+	self.config.tags = list.join(', ')
 	self.saveConfig(self.config)
 
+	list = list.sort((a, b) => a.localeCompare(b))
 	return list;
 }

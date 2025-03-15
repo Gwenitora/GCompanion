@@ -14,7 +14,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	constructor(internal: unknown) {
 		super(internal);
 		if (!this.config) {
-			this.config = {}
+			this.config = {} as any
 		}
 		VariablesCtrl.InitModuleDef(this);
 	}
