@@ -18,11 +18,11 @@
   - speed buzz
   - answers (2 to 4)
 - Pour buzzers web et physique:
-  - Actif ou non
+  - ✅ Actif ou non
   - tag
-  - pour les physique, nom du groupe
-  - nom du buzzer
-  - nom de l'équipe concerner
+  - ✅ pour les physique, nom du groupe
+  - ✅ nom du buzzer
+  - ✅ nom de l'équipe concerner
 - Appel a l'api externe
   - port
   - domaine

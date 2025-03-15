@@ -17,7 +17,7 @@ class PhysiqueBuzzers {
         this.updateDevices();
     }
 
-    public async updateDevices() {
+    public updateDevices() {
         this.devices = {};
         const devices = nodeHid.devices();
         const hids = this.hids;
