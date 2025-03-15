@@ -2,18 +2,21 @@ import { CompanionConfigField, CompanionInputFieldStaticText, type SomeCompanion
 import { ModuleInstance } from './main.js';
 import physiqueBuzzers from './utils/buzzers/physiqueBuzzers.js';
 export interface ModuleConfig {
-	[key: `deviceEnable_${string}`]: boolean;
-	[key: `device_${string}`]: string;
-	[key: `buzzerEnable_${string}_${string}`]: boolean;
-	[key: `buzzer_${string}_${string}`]: string;
-	[key: `buzzerTeam_${string}_${string}`]: string;
+	[ key: `deviceEnable_${string}`           ]: undefined | boolean;
+	[ key: `device_${string}`                 ]: undefined | string;
+	[ key: `buzzerEnable_${string}_${string}` ]: undefined | boolean;
+	[ key: `buzzer_${string}_${string}`       ]: undefined | string;
+	[ key: `buzzerTeam_${string}_${string}`   ]: undefined | string;
+	[ key: `buzzerTags_${string}_${string}`   ]: undefined | string[];
+	[ key: `tag_${number}`                    ]: undefined | string;
 }
 
 export const GetConfigFields = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [];
 
-	out.push(...GetConfigFieldsPBuzzers(self))
-	out.push(GenerateSeperation())
+	out.push(...GetConfigFieldsPBuzzers(self));
+	out.push(GenerateSeperation());
+	out.push(...GetConfigFieldsTags(self));
 
 	return out;
 }
@@ -33,21 +36,20 @@ const GenerateSeperation = (): CompanionInputFieldStaticText & CompanionConfigFi
 const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [];
 
-	var buzzers = physiqueBuzzers.updateDevices();
-	buzzers.sort((a, b) => (a.DeviceId.localeCompare(b.DeviceId)) * 100 + (a.Id - b.Id) * 0.25);
-
-	var lastDeviceId = "{}";
-	var isFirstWithId = true;
-
 	out.push({
 		type: 'static-text',
 		id: 'LabelPBuzzers',
 		label: '',
 		width: 12,
-		value: `
-			<h2>Buzzers physiques</h2>
-		`
+		value: `<h2>Physical buzzers</h2>`
 	});
+
+	const tags = GetAllTags(self).map(e => ({id: e, label: e}));
+	var buzzers = physiqueBuzzers.updateDevices();
+	buzzers.sort((a, b) => (a.DeviceId.localeCompare(b.DeviceId)) * 100 + (a.Id - b.Id) * 0.25);
+
+	var lastDeviceId = "{}";
+	var isFirstWithId = true;
 
 	for (const buzzer of buzzers) {
 		isFirstWithId = false;
@@ -72,7 +74,7 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			});
 		}
 
-		if (self.config[('deviceEnable_' + lastDeviceId) as `deviceEnable_${string}`] === false) continue;
+		if (self.config[`deviceEnable_${lastDeviceId}`] === false) continue;
 
 		out.push({
 			type: 'static-text',
@@ -108,9 +110,69 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			label: isFirstWithId ? 'Tags' : '',
 			width: 2,
 			default: [],
-			choices: []
+			choices: tags
 		});
 	}
 
 	return out;
 };
+
+const GetConfigFieldsTags = (self: ModuleInstance): SomeCompanionConfigField[] => {
+	var out: SomeCompanionConfigField[] = [];
+
+	out.push({
+		type: 'static-text',
+		id: 'LabelTags',
+		label: '',
+		width: 12,
+		value: `<h2>Tags</h2>`
+	});
+	out.push({
+		type: 'static-text',
+		id: 'LabelTags',
+		label: 'To add more tags, fill empty, and save plugin, and new empty slot spawn',
+		width: 12,
+		value: ''
+	});
+
+	const tags = GetAllTags(self);
+	const l = (Math.ceil(tags.length / 6) + 1) * 6;
+
+	for (let i = 0; i < l; i++) {
+		out.push({
+			type: 'textinput',
+			id: 'tag_' + i,
+			label: '',
+			width: 2,
+			default: ' '
+		})
+	}
+
+	return out;
+}
+
+const GetAllTags = (self: ModuleInstance): string[] => {
+	var list: string[] = [];
+
+	const tagsKeys = Object.keys(self.config).filter(e => /^tag_\d+$/.test(e))
+	const tags = tagsKeys.map(e => parseInt(e.slice(4)));
+	for (let i = 0; i <= Math.max(...tags); i++) {
+		list.push(self.config[`tag_${i}`] ? self.config[`tag_${i}`] as string : '')
+	}
+	list = list.map(e => e.trim().toUpperCase());
+	list = list.map((e, i) => i === list.indexOf(e) ? e : "");
+
+	for (let i = 0; i <= Math.max(...tags); i++) {
+		try {
+			delete self.config[`tag_${i}`];
+		} catch (e) {}
+	}
+	console.log(list)
+	list = list.filter(e => e !== '');
+	for (let i = 0; i < list.length; i++) {
+		self.config[`tag_${i}`] = list[i];
+	}
+	self.saveConfig(self.config)
+
+	return list;
+}
