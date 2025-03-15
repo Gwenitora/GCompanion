@@ -7,11 +7,17 @@ class PhysiqueBuzzers {
     private hids: {[key in string]: nodeHid.HID} = {};
     private buzzers: PBuzzer[] = [];
 
-    constructor() {
-        this.getDevices();
+    get Buzzers() {
+        var buzzers: PBuzzer[] = [];
+        this.buzzers.forEach(b => buzzers.push(b));
+        return buzzers
     }
 
-    public async getDevices() {
+    constructor() {
+        this.updateDevices();
+    }
+
+    public async updateDevices() {
         this.devices = {};
         const devices = nodeHid.devices();
         const hids = this.hids;
@@ -43,6 +49,8 @@ class PhysiqueBuzzers {
                 this.buzzers.push(new PBuzzer(this, this.devices[device], this.hids[device], device, i as 0|1|2|3));
             }
         }
+
+        return this.Buzzers;
     }
 
     public getBuzzerOfDevice(deviceId: string, id?: 0|1|2|3) {
