@@ -1,6 +1,10 @@
 import EventManager from "../events.js";
 
 export type qtBoolean = [boolean, boolean, boolean, boolean, boolean];
+export enum buzzerType {
+    Physical,
+    Virtual
+}
 
 abstract class Buzzer {
     protected onChange = new EventManager<(state: qtBoolean, isDifferent: qtBoolean) => void>();
@@ -14,12 +18,19 @@ abstract class Buzzer {
     public onButtonPressed = new EventManager<(button: 0 | 1 | 2 | 3 | 4) => void>();
     public onButtonRelease = new EventManager<(button: 0 | 1 | 2 | 3 | 4) => void>();
 
+    private type: buzzerType;
     private state: boolean = false;
+    private uid: string = "";
 
+    get Type() { return this.type }
     get State() { return this.state; }
+    public get UID() { return this.uid }
     protected set State(state: boolean) { this.state = state; }
+    protected set UID(UID: string) { this.uid = UID; }
 
-    constructor(id: number = 0) {
+    constructor(type: buzzerType, id: number = 0) {
+        this.type = type;
+
         setTimeout(() => {
             this.setLight(true);
             setTimeout(() => {

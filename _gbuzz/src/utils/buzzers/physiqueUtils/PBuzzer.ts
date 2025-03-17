@@ -1,7 +1,7 @@
 import nodeHid from "node-hid";
 import physiqueBuzzers from "../physiqueBuzzers.js";
 import mapper from "./mapper.js";
-import Buzzer, { qtBoolean } from "../Buzzer.js";
+import Buzzer, { buzzerType, qtBoolean } from "../Buzzer.js";
 
 class PBuzzer extends Buzzer {
     private deviceId: string;
@@ -19,7 +19,7 @@ class PBuzzer extends Buzzer {
     get Device() { return this.device; }
 
     constructor(pBuzzers: typeof physiqueBuzzers, device: nodeHid.Device, hid: nodeHid.HID, deviceId: string, id: 0 | 1 | 2 | 3) {
-        super(id);
+        super(buzzerType.Physical, id);
         this.pBuzzers = pBuzzers;
         this.device = device;
         this.hid = hid;
@@ -31,6 +31,8 @@ class PBuzzer extends Buzzer {
     }
 
     public setLight(state: boolean) {
+        this.UID = this.DeviceId + 'p' + this.id;
+
         if (this.State === state) return;
         this.State = state;
         const states = new Array(4) as boolean[];
@@ -51,6 +53,8 @@ class PBuzzer extends Buzzer {
     }
 
     prepareEvents() {
+        this.UID = this.DeviceId + 'p' + this.id;
+
         super.prepareEvents();
 
         this.hid.on("data", (data: Buffer) => {

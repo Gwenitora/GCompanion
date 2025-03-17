@@ -1,13 +1,14 @@
 import { CompanionConfigField, CompanionInputFieldStaticText, type SomeCompanionConfigField } from '@companion-module/base'
 import { ModuleInstance } from './main.js';
 import physiqueBuzzers from './utils/buzzers/physiqueBuzzers.js';
+import buzzersManager from './utils/buzzers/buzzersManager.js';
 export interface ModuleConfig {
 	[ key: `deviceEnable_${string}`           ]: undefined | boolean;
 	[ key: `device_${string}`                 ]: undefined | string;
-	[ key: `buzzerEnable_${string}_${string}` ]: undefined | boolean;
-	[ key: `buzzer_${string}_${string}`       ]: undefined | string;
-	[ key: `buzzerTeam_${string}_${string}`   ]: undefined | string;
-	[ key: `buzzerTags_${string}_${string}`   ]: undefined | string[];
+	[ key: `buzzerEnable_${string}p${number}` ]: undefined | boolean;
+	[ key: `buzzer_${string}p${number}`       ]: undefined | string;
+	[ key: `buzzerTeam_${string}p${number}`   ]: undefined | string;
+	[ key: `buzzerTags_${string}p${number}`   ]: undefined | string[];
 	[ key: `tag_${number}`                    ]: undefined | string;
 	       'tags'                              : undefined | string;
 }
@@ -15,6 +16,7 @@ export interface ModuleConfig {
 export const GetConfigFields = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [];
 
+	buzzersManager.updatePhysicalBuzzers();
 	out.push(...GetConfigFieldsPBuzzers(self));
 	out.push(GenerateSeperation());
 	out.push(...GetConfigFieldsTags(self));
@@ -46,11 +48,13 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 	});
 
 	const tags = GetAllTags(self).map(e => ({id: e, label: e}));
-	var buzzers = physiqueBuzzers.updateDevices();
+	var buzzers = physiqueBuzzers.Buzzers;
 	buzzers.sort((a, b) => (a.DeviceId.localeCompare(b.DeviceId)) * 100 + (a.Id - b.Id) * 0.25);
 
 	var lastDeviceId = "{}";
 	var isFirstWithId = true;
+
+	var connectedBuzzers: string[] = [];
 
 	for (const buzzer of buzzers) {
 		isFirstWithId = false;
@@ -58,6 +62,7 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 		if (buzzer.DeviceId.indexOf(lastDeviceId) < 0) {
 			lastDeviceId = buzzer.DeviceId.replaceAll('{', '').replaceAll('}', '');
 			isFirstWithId = true;
+			connectedBuzzers.push(`device_${lastDeviceId}`);
 			
 			out.push({
 				type: 'checkbox',
@@ -75,43 +80,69 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			});
 		}
 
-		if (self.config[`deviceEnable_${lastDeviceId}`] === false) continue;
-
 		out.push({
 			type: 'static-text',
-			id: 'buzzerLabel_' + lastDeviceId + '_' + buzzer.Id,
+			id: 'buzzerLabel_' + buzzer.UID,
 			label: '',
 			width: 1,
 			value: '' + buzzer.Id,
+			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
 		});
 		out.push({
 			type: 'checkbox',
-			id: 'buzzerEnable_' + lastDeviceId + '_' + buzzer.Id,
+			id: 'buzzerEnable_' + buzzer.UID,
 			label: '',
 			width: 1,
-			default: true
+			default: true,
+			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
 		});
 		out.push({
 			type: 'textinput',
-			id: 'buzzer_' + lastDeviceId + '_' + buzzer.Id,
+			id: 'buzzer_' + buzzer.UID,
 			label: isFirstWithId ? 'Name' : '',
 			width: 4,
-			default: 'Buzzer ' + buzzer.Id
+			default: 'Buzzer ' + buzzer.Id,
+			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
 		});
 		out.push({
 			type: 'textinput',
-			id: 'buzzerTeam_' + lastDeviceId + '_' + buzzer.Id,
+			id: 'buzzerTeam_' + buzzer.UID,
 			label: isFirstWithId ? 'Team name' : '',
 			width: 4,
-			default: ''
+			default: '',
+			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
 		});
 		out.push({
 			type: 'multidropdown',
-			id: 'buzzerTags_' + lastDeviceId + '_' + buzzer.Id,
+			id: 'buzzerTags_' + buzzer.UID,
 			label: isFirstWithId ? 'Tags' : '',
 			width: 2,
 			default: [],
-			choices: tags
+			choices: tags,
+			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
+		});
+	}
+
+	var nonConnectedBuzzersValues: string[] = Object.keys(self.config).filter(e => /^device_(.+)$/.test(e) && !connectedBuzzers.includes(e)).filter(e => self.config[e as `device_${string}`] !== undefined);
+	if (nonConnectedBuzzersValues.length === 0) return out;
+	var nonConnectedBuzzers: string[] = nonConnectedBuzzersValues.map(e => self.config[e as `device_${string}`]).filter(e => e !== undefined);
+	nonConnectedBuzzersValues = nonConnectedBuzzersValues.map(e => e.replace('device_', ''))
+
+	out.push({
+		type: 'static-text',
+		id: 'LabelPBuzzersNC',
+		label: '',
+		width: 12,
+		value: `<h5>Non connected buzzers</h5>`
+	});
+
+	for (let i = 0; i < nonConnectedBuzzers.length; i++) {
+		out.push({
+			type: 'static-text',
+			id: 'LabelPBuzzerNC_' + nonConnectedBuzzersValues[i],
+			label: nonConnectedBuzzersValues[i].slice(0, 9) + '..',
+			width: 3,
+			value: nonConnectedBuzzers[i]
 		});
 	}
 
@@ -171,7 +202,7 @@ const GetAllTags = (self: ModuleInstance): string[] => {
 
 	list = list.filter(e => e !== '');
 	self.config.tags = list.join(', ')
-	self.saveConfig(self.config)
+	self.saveConf()
 
 	list = list.sort((a, b) => a.localeCompare(b))
 	return list;
