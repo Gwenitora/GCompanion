@@ -1,6 +1,7 @@
-import { CompanionConfigField, CompanionInputFieldStaticText, type SomeCompanionConfigField } from '@companion-module/base'
+import { CompanionConfigField, CompanionInputFieldStaticText, CompanionOptionValues, DropdownChoice, type SomeCompanionConfigField } from '@companion-module/base'
 import { ModuleInstance } from './main.js';
 import physiqueBuzzers from './utils/buzzers/physiqueBuzzers.js';
+import Gamemodes from './utils/mode.js';
 export interface ModuleConfig {
 	[ key: `deviceEnable_${string}`           ]: undefined | boolean;
 	[ key: `device_${string}`                 ]: undefined | string;
@@ -10,11 +11,16 @@ export interface ModuleConfig {
 	[ key: `buzzerTags_${string}_${string}`   ]: undefined | string[];
 	[ key: `tag_${number}`                    ]: undefined | string;
 	       'tags'                              : undefined | string;
+	       'Gamemode'                          : undefined | number;
+	       'canBuzz'                           : undefined | number;
+	       'activateAnswers'                   : undefined | number[];
 }
 
 export const GetConfigFields = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [];
 
+	out.push(...GetConfigFieldsGamemode(self));
+	out.push(GenerateSeperation());
 	out.push(...GetConfigFieldsPBuzzers(self));
 	out.push(GenerateSeperation());
 	out.push(...GetConfigFieldsTags(self));
@@ -117,6 +123,70 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 
 	return out;
 };
+
+const GetConfigFieldsGamemode = (self: ModuleInstance): SomeCompanionConfigField[] => {
+	var out: SomeCompanionConfigField[] = [];
+
+	// const isOffMode = (invert: boolean = false) => {
+	// 	return (event: CompanionOptionValues) => {
+	// 		return (event.Gamemode === Gamemodes.OFF) !== invert
+	// 	}
+	// }
+
+	const isSpeedMode = (invert: boolean = false) => {
+		return (event: CompanionOptionValues) => {
+			return (event.Gamemode === Gamemodes.SPEED) !== invert
+		}
+	}
+
+	// const isChoiceMode = (invert: boolean = false) => {
+	// 	return (event: CompanionOptionValues) => {
+	// 		return (event.Gamemode === Gamemodes.CHOICE) !== invert
+	// 	}
+	// }
+
+	out.push({
+		type: 'static-text',
+		id: 'LabelGamemode',
+		label: '',
+		width: 12,
+		value: `<h2>Gamemode</h2>`
+	});
+
+	var choices: DropdownChoice[] = [];
+	for (const mode in Gamemodes) {
+		if (isNaN(parseInt(mode))) {
+			choices.push({
+				id: Gamemodes[mode],
+				label: mode
+			})
+		}
+	}
+
+	out.push({
+		type: 'dropdown',
+		id: 'Gamemode',
+		choices: choices,
+		default: Gamemodes.OFF,
+		label: '',
+		width: 12
+	});
+
+	out.push({
+		type: 'number',
+		id: 'canBuzz',
+		label: 'Number of poeple can buzz in maximum',
+		default: 1,
+		min: 0,
+		max: 999_999_999_999_999_999_999,
+		width: 6,
+		isVisible: (event: CompanionOptionValues) => {return event.Gamemode === 1}
+	});
+
+	// activateAnswers
+
+	return out;
+}
 
 const GetConfigFieldsTags = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [];
