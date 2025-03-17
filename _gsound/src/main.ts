@@ -63,6 +63,11 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		VariablesCtrl.UpdateVariableDefinitions()
 		return this
 	}
+
+	saveConf(newConfig?: ModuleConfig): void {
+		if (newConfig === undefined) newConfig = this.config;
+		this.saveConfig(newConfig)
+	}
 }
 
 runEntrypoint(ModuleInstance, UpgradeScripts)
