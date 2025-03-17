@@ -1,8 +1,9 @@
-import { CompanionConfigField, CompanionInputFieldStaticText, CompanionOptionValues, DropdownChoice, type SomeCompanionConfigField } from '@companion-module/base'
+import { CompanionConfigField, CompanionInputFieldStaticText, DropdownChoice, type SomeCompanionConfigField } from '@companion-module/base'
 import { ModuleInstance } from './main.js';
 import physiqueBuzzers from './utils/buzzers/physiqueBuzzers.js';
 import Gamemodes from './utils/mode.js';
 import buzzersManager from './utils/buzzers/buzzersManager.js';
+import GameModes from './utils/mode.js';
 export interface ModuleConfig {
 	[ key: `deviceEnable_${string}`           ]: undefined | boolean;
 	[ key: `device_${string}`                 ]: undefined | string;
@@ -92,7 +93,8 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			label: '',
 			width: 1,
 			value: '' + buzzer.Id,
-			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
+			isVisible: (event, data) => { return event[data] as any },
+			isVisibleData: `deviceEnable_${lastDeviceId}`
 		});
 		out.push({
 			type: 'checkbox',
@@ -100,7 +102,8 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			label: '',
 			width: 1,
 			default: true,
-			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
+			isVisible: (event, data) => { return event[data] as any },
+			isVisibleData: `deviceEnable_${lastDeviceId}`
 		});
 		out.push({
 			type: 'textinput',
@@ -108,7 +111,8 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			label: isFirstWithId ? 'Name' : '',
 			width: 4,
 			default: 'Buzzer ' + buzzer.Id,
-			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
+			isVisible: (event, data) => { return event[data] as any },
+			isVisibleData: `deviceEnable_${lastDeviceId}`
 		});
 		out.push({
 			type: 'textinput',
@@ -116,7 +120,8 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			label: isFirstWithId ? 'Team name' : '',
 			width: 4,
 			default: '',
-			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
+			isVisible: (event, data) => { return event[data] as any },
+			isVisibleData: `deviceEnable_${lastDeviceId}`
 		});
 		out.push({
 			type: 'multidropdown',
@@ -125,7 +130,8 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 			width: 2,
 			default: [],
 			choices: tags,
-			isVisible: (event) => { return !event[`deviceEnable_${lastDeviceId}`] }
+			isVisible: (event, data) => { return event[data] as any },
+			isVisibleData: `deviceEnable_${lastDeviceId}`
 		});
 	}
 
@@ -139,7 +145,7 @@ const GetConfigFieldsPBuzzers = (self: ModuleInstance): SomeCompanionConfigField
 		id: 'LabelPBuzzersNC',
 		label: '',
 		width: 12,
-		value: `<h5>Non connected buzzers</h5>`
+		value: `<h5>Disconnected buzzers</h5>`
 	});
 
 	for (let i = 0; i < nonConnectedBuzzers.length; i++) {
@@ -193,7 +199,8 @@ const GetConfigFieldsGamemode = (self: ModuleInstance): SomeCompanionConfigField
 		min: 0,
 		max: 999_999_999_999_999_999_999,
 		width: 6,
-		isVisible: (event: CompanionOptionValues) => {return event.Gamemode === 1}
+		isVisible: (event, data) => {return event.Gamemode === data},
+		isVisibleData: GameModes.SPEED
 	});
 
 	// activateAnswers
