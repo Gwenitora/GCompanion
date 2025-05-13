@@ -1,4 +1,4 @@
-import { type SomeCompanionConfigField } from '@companion-module/base'
+import { CompanionConfigField, CompanionInputFieldStaticText, type SomeCompanionConfigField } from '@companion-module/base'
 import { ModuleInstance } from './main.js';
 import AudioManager from './utils/audio.js';
 
@@ -8,7 +8,7 @@ export interface ModuleConfig {
 	[key: `Virtual${'In' | 'Out'}put${number}`]: string;
 }
 
-export function GetConfigFields(self: ModuleInstance): SomeCompanionConfigField[] {
+export const GetConfigFields = (self: ModuleInstance): SomeCompanionConfigField[] => {
 	var out: SomeCompanionConfigField[] = [{
 		type: 'number',
 		label: 'Virtual Input/Output Length',
@@ -53,4 +53,16 @@ export function GetConfigFields(self: ModuleInstance): SomeCompanionConfigField[
 	}
 
 	return out;
+}
+
+var sep = -1;
+const GenerateSeperation = (): CompanionInputFieldStaticText & CompanionConfigField => {
+	sep++;
+	return {
+		type: 'static-text',
+		id: 'seperator_' + sep,
+		label: '',
+		width: 12,
+		value: '<hr />'
+	}
 }

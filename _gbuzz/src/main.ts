@@ -13,6 +13,9 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 	constructor(internal: unknown) {
 		super(internal);
+		if (!this.config) {
+			this.config = {} as any
+		}
 		VariablesCtrl.InitModuleDef(this);
 	}
 
@@ -59,6 +62,11 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	updateVariableDefinitions(): ModuleInstance {
 		VariablesCtrl.UpdateVariableDefinitions()
 		return this
+	}
+
+	saveConf(newConfig?: ModuleConfig): void {
+		if (newConfig === undefined) newConfig = this.config;
+		this.saveConfig(newConfig)
 	}
 }
 
