@@ -48,8 +48,7 @@ jobs:
 
             for tgz in *.tgz; do
               [ -e "$tgz" ] || continue
-              base="${tgz%.tgz}"
-              mv "$tgz" "../${base}.GCompanion"
+              mv "$tgz" "../${tgz}.GCompanion"
             done
 
             cd ..
