@@ -60,10 +60,11 @@ jobs:
       - name: Remove useless files and rename directories for better name
         run: |
           find . -path ./.git -prune -o -name '*.GCompanion' -prune -o -type f -exec rm -f {} +
-          for dir in */; do
-            dirname="${dir%/}"
-            newname="${dirname:0:-11}"
-            mv "$dirname" "$newname"
+
+          for dir in *.GCompanion; do
+            [ -e "$dir" ] || continue
+            base="${dir%.GCompanion}"
+            mv "$dir" "$base"
           done
 
       - name: Setup branch main
