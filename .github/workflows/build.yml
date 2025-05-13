@@ -21,7 +21,7 @@ jobs:
         run: |
           git submodule init
           git submodule update
-          
+
           cd .git
           rm -rf modules
           cd ..
@@ -46,11 +46,12 @@ jobs:
             npm i
             npm run pack
 
-            find . -path ./.git -prune -o -name '*.tgz' -prune -o -type f -exec rm -f {} +
-            for dir in *; do
-              dirname="${dir%/}"
-              mv $dirname "../$dirname_.GCompanion"
+            for tgz in *.tgz; do
+              [ -e "$tgz" ] || continue
+              base="${tgz%.tgz}"
+              mv "$tgz" "../${base}.GCompanion"
             done
+
             cd ..
             rm -rf "$dir"
 
