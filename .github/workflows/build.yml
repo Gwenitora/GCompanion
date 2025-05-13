@@ -47,7 +47,7 @@ jobs:
             npm run pack
 
             find . -path ./.git -prune -o -name '*.tgz' -prune -o -type f -exec rm -f {} +
-            for dir in */; do
+            for dir in *; do
               dirname="${dir%/}"
               mv $dirname "../$dirname_.GCompanion"
             done
